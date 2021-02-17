@@ -9,7 +9,7 @@ gcc lex.yy.c -o analex -lfl
 
 To run the Lexer you must feed to the program an input .txt file with the code written in the specified language.
 
-./analex ex1R.txt
+./analex examples/ex1R.txt
 
 The available examples were obtained from the Language Description available at Aprender3.
 Changes to these examples were made to explore the errors thrown by the Lexer,so:
