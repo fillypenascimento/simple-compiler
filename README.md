@@ -8,7 +8,7 @@ This is going to generate the C program with the Lexycal Analyzer in the file le
 
 To run the Lexer you must feed to the program an input .txt file with the code written in the specified language.
 
-./analex examples/ex1R.txt
+```./analex examples/ex1R.txt```
 
 The available examples were obtained from the Language Description available at Aprender3.
 Changes to these examples were made to explore the errors thrown by the Lexer,so:
