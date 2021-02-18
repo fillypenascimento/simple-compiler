@@ -1,0 +1,96 @@
+<translation-unit> ::= {<external-declaration>}*
+
+<external-declaration> ::= <function-definition>
+                         | <declaration>
+
+<type-specifier> ::= int
+                   | float
+                   | elem
+                   | set
+
+<function-definition> ::= <type-specifier> <declarator> <compound-statement>
+
+<declarator> ::= <identifier> (<parameter-list>)
+
+<parameter-list> ::= <parameter-declaration>
+                   | <parameter-declaration> , <parameter-list>
+
+<parameter-declaration> ::= <type-specifier> <identifier>
+
+<declaration> ::=  <type-specifier> <identifier> ;
+
+<pointer> ::= *
+
+<constant-expression> ::= <logical-or-expression>
+
+<logical-or-expression> ::= <logical-and-expression>
+                          | <logical-or-expression> || <logical-and-expression>
+
+<logical-and-expression> ::= <and-expression>
+                           | <logical-and-expression> && <and-expression>
+
+<and-expression> ::= <equality-expression>
+                   | <and-expression> & <equality-expression>
+
+<equality-expression> ::= <relational-expression>
+                        | <equality-expression> == <relational-expression>
+                        | <equality-expression> != <relational-expression>
+
+<relational-expression> ::= <additive-expression>
+                          | <relational-expression> < <additive-expression>
+                          | <relational-expression> > <additive-expression>
+                          | <relational-expression> <= <additive-expression>
+                          | <relational-expression> >= <additive-expression>
+
+<additive-expression> ::= <multiplicative-expression>
+                        | <additive-expression> + <multiplicative-expression>
+                        | <additive-expression> - <multiplicative-expression>
+
+<multiplicative-expression> ::= <unary-expression>
+                              | <multiplicative-expression> * <unary-expression>
+                              | <multiplicative-expression> / <unary-expression>
+
+<unary-expression> ::= <primary-expression>
+                     | <unary-operator> <multiplicative-expression>
+
+<primary-expression> ::= <identifier>
+                       | <constant>
+                       | ( <expression> )
+
+<constant> ::= <integer-constant>
+             | <floating-constant>
+             | <empty>
+
+<expression> ::= <assignment-expression>
+               | <expression> , <assignment-expression>
+
+<assignment-expression> ::= <logical-or-expression>
+                          | <unary-expression> <assignment-operator> <assignment-expression>
+
+<assignment-operator> ::= =
+
+<unary-operator> ::= !
+
+<initializer> ::= <assignment-expression>
+                | { <initializer-list> }
+                | { <initializer-list> , }
+
+<initializer-list> ::= <initializer>
+                     | <initializer-list> , <initializer>
+
+<compound-statement> ::= { {<declaration>}* {<statement>}* }
+
+<statement> ::= <expression-statement>
+              | <compound-statement>
+              | <selection-statement>
+              | <iteration-statement>
+              | <jump-statement>
+
+<expression-statement> ::= {<expression>}? ;
+
+<selection-statement> ::= if ( <expression> ) <statement>
+                        | if ( <expression> ) <statement> else <statement>
+
+<iteration-statement> ::= for ( {<expression>}? ; {<expression>}? ; {<expression>}? ) <statement>
+
+<jump-statement> ::= return {<expression>}? ;
