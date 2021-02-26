@@ -1,4 +1,4 @@
-set copy_set(set s) {
+set copy_s&t(set s) {
     set 1_ans;
     1_ans = EMPTY;
     forall(x in s) add(x in 1_ans);
