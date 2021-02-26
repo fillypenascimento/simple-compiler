@@ -519,13 +519,14 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "analex.l"
-#line 2 "analex.l"
+#define YY_NO_INPUT 1
+#line 4 "analex.l"
 #include <stdio.h>
 
 int line = 1, column = 1, error_count = 0;
-#line 527 "lex.yy.c"
+#line 528 "lex.yy.c"
 
-#line 529 "lex.yy.c"
+#line 530 "lex.yy.c"
 
 #define INITIAL 0
 #define ML_COMMENT 1
@@ -586,8 +587,6 @@ extern int yywrap ( void );
 #endif
 
 #ifndef YY_NO_UNPUT
-    
-    static void yyunput ( int c, char *buf_ptr  );
     
 #endif
 
@@ -743,9 +742,9 @@ YY_DECL
 		}
 
 	{
-#line 72 "analex.l"
+#line 74 "analex.l"
 
-#line 749 "lex.yy.c"
+#line 748 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -804,51 +803,51 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 73 "analex.l"
+#line 75 "analex.l"
 {
   column++;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 77 "analex.l"
+#line 79 "analex.l"
 /*Não incremento contador de coluna pois não me interessa o conteúdo do comentário*/
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 79 "analex.l"
+#line 81 "analex.l"
 {
   BEGIN(ML_COMMENT);
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 83 "analex.l"
+#line 85 "analex.l"
 {
   BEGIN(INITIAL);
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 87 "analex.l"
+#line 89 "analex.l"
 //Fonte: https://steemit.com/programming/@drifter1/writing-a-simple-compiler-on-my-own-lexical-analysis-using-flex
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 89 "analex.l"
+#line 91 "analex.l"
 //Fonte: https://steemit.com/programming/@drifter1/writing-a-simple-compiler-on-my-own-lexical-analysis-using-flex
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 91 "analex.l"
+#line 93 "analex.l"
 {
   line++;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 95 "analex.l"
+#line 97 "analex.l"
 {
   column += yyleng;
   printf("<TYPEINT,%s>\n", yytext);
@@ -856,7 +855,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 100 "analex.l"
+#line 102 "analex.l"
 {
   column += yyleng;
   printf("<TYPEFLOAT,%s>\n", yytext);
@@ -864,7 +863,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 105 "analex.l"
+#line 107 "analex.l"
 {
   column += yyleng;
   printf("<TYPEELEM,%s>\n", yytext);
@@ -872,7 +871,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 110 "analex.l"
+#line 112 "analex.l"
 {
   column += yyleng;
   printf("<TYPESET,%s>\n", yytext);
@@ -880,7 +879,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 115 "analex.l"
+#line 117 "analex.l"
 {
   column += yyleng;
   printf("<IF>\n");
@@ -888,7 +887,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 120 "analex.l"
+#line 122 "analex.l"
 {
   column += yyleng;
   printf("<ELSE>\n");
@@ -896,7 +895,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 125 "analex.l"
+#line 127 "analex.l"
 {
   column += yyleng;
   printf("<FOR>\n");
@@ -904,7 +903,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 130 "analex.l"
+#line 132 "analex.l"
 {
   column += yyleng;
   printf("<RETURN>\n");
@@ -912,7 +911,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 135 "analex.l"
+#line 137 "analex.l"
 {
   column += yyleng;
   printf("<READ>\n");
@@ -920,7 +919,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 140 "analex.l"
+#line 142 "analex.l"
 {
   column += yyleng;
   printf("<WRITE>\n");
@@ -928,7 +927,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 145 "analex.l"
+#line 147 "analex.l"
 {
   column += yyleng;
   printf("<WRITELN>\n");
@@ -936,7 +935,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 150 "analex.l"
+#line 152 "analex.l"
 {
   column += yyleng;
   printf("<IN_OP,%s>\n", yytext);
@@ -944,7 +943,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 155 "analex.l"
+#line 157 "analex.l"
 {
   column += yyleng;
   printf("<IS_SET_OP,%s>\n", yytext);
@@ -952,7 +951,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 160 "analex.l"
+#line 162 "analex.l"
 {
   column += yyleng;
   printf("<ADD_OP,%s>\n", yytext);
@@ -960,7 +959,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 165 "analex.l"
+#line 167 "analex.l"
 {
   column += yyleng;
   printf("<REMOVE_OP,%s>\n", yytext);
@@ -968,7 +967,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 170 "analex.l"
+#line 172 "analex.l"
 {
   column += yyleng;
   printf("<EXISTS_OP,%s>\n", yytext);
@@ -976,7 +975,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 175 "analex.l"
+#line 177 "analex.l"
 {
   column += yyleng;
   printf("<FORALL_OP,%s>\n", yytext);
@@ -984,7 +983,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 180 "analex.l"
+#line 182 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -992,7 +991,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 185 "analex.l"
+#line 187 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1000,7 +999,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 190 "analex.l"
+#line 192 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1008,7 +1007,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 195 "analex.l"
+#line 197 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1016,7 +1015,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 200 "analex.l"
+#line 202 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1024,7 +1023,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 205 "analex.l"
+#line 207 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1032,7 +1031,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 210 "analex.l"
+#line 212 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1040,7 +1039,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 215 "analex.l"
+#line 217 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1048,7 +1047,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 220 "analex.l"
+#line 222 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1056,7 +1055,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 225 "analex.l"
+#line 227 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1064,7 +1063,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 230 "analex.l"
+#line 232 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1072,7 +1071,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 235 "analex.l"
+#line 237 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1080,7 +1079,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 240 "analex.l"
+#line 242 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1088,7 +1087,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 245 "analex.l"
+#line 247 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1096,7 +1095,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 250 "analex.l"
+#line 252 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1104,7 +1103,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 255 "analex.l"
+#line 257 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1112,7 +1111,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 260 "analex.l"
+#line 262 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1120,7 +1119,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 265 "analex.l"
+#line 267 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1128,7 +1127,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 270 "analex.l"
+#line 272 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1136,7 +1135,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 275 "analex.l"
+#line 277 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1144,7 +1143,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 280 "analex.l"
+#line 282 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1152,7 +1151,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 285 "analex.l"
+#line 287 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1160,7 +1159,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 290 "analex.l"
+#line 292 "analex.l"
 {
   column += yyleng;
   printf("<%s>\n", yytext);
@@ -1168,7 +1167,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 295 "analex.l"
+#line 297 "analex.l"
 {
   column += yyleng;
   printf("<INT,%s>\n", yytext);
@@ -1176,7 +1175,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 300 "analex.l"
+#line 302 "analex.l"
 {
   column += yyleng;
   printf("<FLOAT,%s>\n", yytext);
@@ -1185,7 +1184,7 @@ YY_RULE_SETUP
 case 50:
 /* rule 50 can match eol */
 YY_RULE_SETUP
-#line 305 "analex.l"
+#line 307 "analex.l"
 {
   column += yyleng;
   printf("<CHAR,%s>\n", yytext);
@@ -1194,7 +1193,7 @@ YY_RULE_SETUP
 case 51:
 /* rule 51 can match eol */
 YY_RULE_SETUP
-#line 310 "analex.l"
+#line 312 "analex.l"
 {
   column += yyleng;
   printf("<STRING,%s>\n", yytext);
@@ -1202,7 +1201,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 315 "analex.l"
+#line 317 "analex.l"
 {
   column += yyleng;
   printf("<ID,%s>\n", yytext);
@@ -1211,7 +1210,7 @@ YY_RULE_SETUP
 case 53:
 /* rule 53 can match eol */
 YY_RULE_SETUP
-#line 320 "analex.l"
+#line 322 "analex.l"
 {
   line++;
   column = 1;
@@ -1219,7 +1218,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 325 "analex.l"
+#line 327 "analex.l"
 {
   printf("Error: unrecognized character \"%s\" in line %d column %d\n", yytext, line, column);
   error_count++;
@@ -1228,10 +1227,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 330 "analex.l"
+#line 332 "analex.l"
 ECHO;
 	YY_BREAK
-#line 1235 "lex.yy.c"
+#line 1234 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(ML_COMMENT):
 	yyterminate();
@@ -1567,43 +1566,6 @@ static int yy_get_next_buffer (void)
 }
 
 #ifndef YY_NO_UNPUT
-
-    static void yyunput (int c, char * yy_bp )
-{
-	char *yy_cp;
-    
-    yy_cp = (yy_c_buf_p);
-
-	/* undo effects of setting up yytext */
-	*yy_cp = (yy_hold_char);
-
-	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
-		{ /* need to shift things up to make room */
-		/* +2 for EOB chars. */
-		int number_to_move = (yy_n_chars) + 2;
-		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
-					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
-		char *source =
-				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
-
-		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
-			*--dest = *--source;
-
-		yy_cp += (int) (dest - source);
-		yy_bp += (int) (dest - source);
-		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-			(yy_n_chars) = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
-
-		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
-			YY_FATAL_ERROR( "flex scanner push-back overflow" );
-		}
-
-	*--yy_cp = (char) c;
-
-	(yytext_ptr) = yy_bp;
-	(yy_hold_char) = *yy_cp;
-	(yy_c_buf_p) = yy_cp;
-}
 
 #endif
 
@@ -2237,13 +2199,14 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 330 "analex.l"
+#line 332 "analex.l"
 
 
 int main(int argc, char *argv[]){
    yyin = fopen(argv[1], "r");
    yylex();
    fclose(yyin);
+   yylex_destroy();
 
    if(error_count > 0){
      printf("\nThe lexical analisys finished with %d errors found.\n", error_count);

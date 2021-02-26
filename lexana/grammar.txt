@@ -11,9 +11,9 @@ parameter => variable
 compound-stmt => { local-declarations statement-list }
 local-declarations => local-declarations var-declaration | empty-set
 statement-list => statement-list statement | empty-set
-statement => compound-statement | conditional-stmt | iteration-stmt | expression-stmt | return-stmt
+statement => compound-stmt | conditional-stmt | iteration-stmt | expression-stmt | return-stmt
 conditional-stmt => if ( expression ) statement | if ( expression ) statement else statement
-iteration-stmt => for ( expression-stmt expression-stmt expression-stmt ) statement
+iteration-stmt => for ( expression-stmt expression-stmt expression ) statement
 expression-stmt => expression ; | ;
 return-stmt => return ; | return expression-stmt
 expression => ID = expression | simple-expression | set-expression | io-expression
@@ -28,7 +28,7 @@ relop => < | <= | > | >= | == | !=
 ariop-add => + | - 
 ariop-mul => * | /
 set-expression => setop_in | setop_is_set | setop_add | setop_remove | setop_exists | setop_forall
-setop-in => ( expression in ID )
+setop-in => ( expression in expression )
 setop_is_set => is_set ( ID )
 setop_add => add setop_in
 setop_remove => remove setop_in

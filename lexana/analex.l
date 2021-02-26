@@ -1,3 +1,5 @@
+%option noinput nounput
+
 %{
 #include <stdio.h>
 
@@ -333,6 +335,7 @@ int main(int argc, char *argv[]){
    yyin = fopen(argv[1], "r");
    yylex();
    fclose(yyin);
+   yylex_destroy();
 
    if(error_count > 0){
      printf("\nThe lexical analisys finished with %d errors found.\n", error_count);
