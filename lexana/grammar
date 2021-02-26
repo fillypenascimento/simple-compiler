@@ -1,96 +1,56 @@
-<translation-unit> ::= {<external-declaration>}*
+program => declaration-list
+declaration-list => declaration-list declaration | declaration
+declaration => var-declaration | func-declaration
+var-declaration => variable ;
+variable => type-specifier ID
+func-declaration => type-specifier ID ( parameters ) compound-stmt
+type-specifier => int | float | elem | set
+parameters => parameter-list | empty-set
+parameter-list => parameter-list, parameter | parameter
+parameter => variable
+compound-stmt => { local-declarations statement-list }
+local-declarations => local-declarations var-declaration | empty-set
+statement-list => statement-list statement | empty-set
+statement => compound-statement | conditional-stmt | iteration-stmt | expression-stmt | return-stmt
+conditional-stmt => if ( expression ) statement | if ( expression ) statement else statement
+iteration-stmt => for ( expression-stmt expression-stmt expression-stmt ) statement
+expression-stmt => expression ; | ;
+return-stmt => return ; | return expression-stmt
+expression => ID = expression | simple-expression | set-expression | io-expression
+simple-expression => logop-una relational-exp | relational-exp logop-bin relational-exp | relational-exp
+relational-exp => arithm-add-exp relop arithm-add-exp | arithm-add-exp
+arithm-add-exp => arithm-add-exp ariop-add arithm-mul-exp | arithm-mul-exp
+arithm-mul-exp => arithm-mul-exp ariop-mul factor | factor
+factor => ( expression ) | func-call | ID | INT | FLOAT | EMPTY
+logop-una => ! 
+logop-bin => && | ||
+relop => < | <= | > | >= | == | !=
+ariop-add => + | - 
+ariop-mul => * | /
+set-expression => setop_in | setop_is_set | setop_add | setop_remove | setop_exists | setop_forall
+setop-in => ( expression in ID )
+setop_is_set => is_set ( ID )
+setop_add => add setop_in
+setop_remove => remove setop_in
+setop_exists => exists (ID in ID)
+setop_forall => forall setop_in statement
+io-expression => ioop-read | ioop-write
+ioop-read => read ( ID )
+ioop-write => write ( word ) | writeln ( word )
+word => CHAR | STRING
+func-call => ID ( arguments )
+arguments => args-list | empty-set
+args-list => args-list, expression | expression
 
-<external-declaration> ::= <function-definition>
-                         | <declaration>
+DIGIT     0 | .. | 9
+INT       DIGIT+
+FLOAT     DIGIT+ . DIGIT+
+LETTER_   a | .. | z | A | Z | _
+ID        LETTER_ LETTER_* DIGIT*
+CHAR      ' DIGIT | LETTER '
+STRING    ' DIGIT* | LETTER_* '
+EMPTY     EMPTY
 
-<type-specifier> ::= int
-                   | float
-                   | elem
-                   | set
-
-<function-definition> ::= <type-specifier> <declarator> <compound-statement>
-
-<declarator> ::= <identifier> (<parameter-list>)
-
-<parameter-list> ::= <parameter-declaration>
-                   | <parameter-declaration> , <parameter-list>
-
-<parameter-declaration> ::= <type-specifier> <identifier>
-
-<declaration> ::=  <type-specifier> <identifier> ;
-
-<pointer> ::= *
-
-<constant-expression> ::= <logical-or-expression>
-
-<logical-or-expression> ::= <logical-and-expression>
-                          | <logical-or-expression> || <logical-and-expression>
-
-<logical-and-expression> ::= <and-expression>
-                           | <logical-and-expression> && <and-expression>
-
-<and-expression> ::= <equality-expression>
-                   | <and-expression> & <equality-expression>
-
-<equality-expression> ::= <relational-expression>
-                        | <equality-expression> == <relational-expression>
-                        | <equality-expression> != <relational-expression>
-
-<relational-expression> ::= <additive-expression>
-                          | <relational-expression> < <additive-expression>
-                          | <relational-expression> > <additive-expression>
-                          | <relational-expression> <= <additive-expression>
-                          | <relational-expression> >= <additive-expression>
-
-<additive-expression> ::= <multiplicative-expression>
-                        | <additive-expression> + <multiplicative-expression>
-                        | <additive-expression> - <multiplicative-expression>
-
-<multiplicative-expression> ::= <unary-expression>
-                              | <multiplicative-expression> * <unary-expression>
-                              | <multiplicative-expression> / <unary-expression>
-
-<unary-expression> ::= <primary-expression>
-                     | <unary-operator> <multiplicative-expression>
-
-<primary-expression> ::= <identifier>
-                       | <constant>
-                       | ( <expression> )
-
-<constant> ::= <integer-constant>
-             | <floating-constant>
-             | <empty>
-
-<expression> ::= <assignment-expression>
-               | <expression> , <assignment-expression>
-
-<assignment-expression> ::= <logical-or-expression>
-                          | <unary-expression> <assignment-operator> <assignment-expression>
-
-<assignment-operator> ::= =
-
-<unary-operator> ::= !
-
-<initializer> ::= <assignment-expression>
-                | { <initializer-list> }
-                | { <initializer-list> , }
-
-<initializer-list> ::= <initializer>
-                     | <initializer-list> , <initializer>
-
-<compound-statement> ::= { {<declaration>}* {<statement>}* }
-
-<statement> ::= <expression-statement>
-              | <compound-statement>
-              | <selection-statement>
-              | <iteration-statement>
-              | <jump-statement>
-
-<expression-statement> ::= {<expression>}? ;
-
-<selection-statement> ::= if ( <expression> ) <statement>
-                        | if ( <expression> ) <statement> else <statement>
-
-<iteration-statement> ::= for ( {<expression>}? ; {<expression>}? ; {<expression>}? ) <statement>
-
-<jump-statement> ::= return {<expression>}? ;
+KEYWORDS: if else for return read write writeln in is_set add remove exists forall
+SPECIAL SYMBOLS: + - * / ! || && < <= > >= == != = ( ) { } , ; /* */ //
+COMMENTS: /* ... */ // ...
