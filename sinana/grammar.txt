@@ -1,0 +1,57 @@
+program => declaration-list
+declaration-list => declaration-list declaration | declaration
+declaration => var-declaration | func-declaration
+var-declaration => variable ;
+variable => type-specifier ID
+func-declaration => type-specifier ID ( parameters ) compound-stmt
+type-specifier => int | float | elem | set
+parameters => parameter-list | empty-set
+parameter-list => parameter-list, parameter | parameter
+parameter => variable
+compound-stmt => { compound-stmt-body }
+compound-stmt-body => compound-stmt-body local-declarations statement-list | local-declarations statement-list
+local-declarations => local-declarations var-declaration | empty-set
+statement-list => statement-list statement | empty-set
+statement => compound-stmt | conditional-stmt | iteration-stmt | expression-stmt | return-stmt
+conditional-stmt => if ( expression ) statement | if ( expression ) statement else statement
+iteration-stmt => for ( expression-stmt expression-stmt expression ) statement
+expression-stmt => expression ; | ;
+return-stmt => return ; | return expression-stmt
+expression => ID = expression | simple-expression | set-expression | io-expression
+simple-expression => logop-una relational-exp | relational-exp logop-bin relational-exp | relational-exp
+relational-exp => arithm-add-exp relop arithm-add-exp | arithm-add-exp
+arithm-add-exp => arithm-add-exp ariop-add arithm-mul-exp | arithm-mul-exp
+arithm-mul-exp => arithm-mul-exp ariop-mul factor | factor
+factor => ( expression ) | func-call | ID | INT | FLOAT | EMPTY
+logop-una => ! 
+logop-bin => && | ||
+relop => < | <= | > | >= | == | !=
+ariop-add => + | - 
+ariop-mul => * | /
+set-expression => setop_in | setop_is_set | setop_add | setop_remove | setop_exists | setop_forall
+setop-in => ( expression in expression )
+setop_is_set => is_set ( ID )
+setop_add => add setop_in
+setop_remove => remove setop_in
+setop_exists => exists (ID in ID)
+setop_forall => forall setop_in statement
+io-expression => ioop-read | ioop-write
+ioop-read => read ( ID )
+ioop-write => write ( word ) | writeln ( word )
+word => CHAR | STRING
+func-call => ID ( arguments )
+arguments => args-list | empty-set
+args-list => args-list, expression | expression
+
+DIGIT     0 | .. | 9
+INT       DIGIT+
+FLOAT     DIGIT+ . DIGIT+
+LETTER_   a | .. | z | A | Z | _
+ID        LETTER_ LETTER_* DIGIT*
+CHAR      ' DIGIT | LETTER '
+STRING    ' DIGIT* | LETTER_* '
+EMPTY     EMPTY
+
+KEYWORDS: if else for return read write writeln in is_set add remove exists forall
+SPECIAL SYMBOLS: + - * / ! || && < <= > >= == != = ( ) { } , ; /* */ //
+COMMENTS: /* ... */ // ...
