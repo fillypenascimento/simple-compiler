@@ -6,11 +6,12 @@
     #include <stdio.h>
 
     extern int yylex();
-    extern void yyerror(const char *token_name);
     extern int yylex_destroy();
     extern FILE *yyin;
     extern int line;
     extern int column;
+    extern int error_count;
+    extern void yyerror(const char *token_name);
 %}
 
 %define lr.type canonical-lr
@@ -77,6 +78,7 @@
     struct node *node;
 }
 
+
 %%
 
 program: declaration-list { printf("program\n"); }
@@ -108,26 +110,12 @@ parameter: variable { printf("parameter  ->  variable\n"); }
 ;
 compound-stmt: '{' local-declarations '}' { printf("compound-stmt  ->  { local-declarations }\n"); }
 ;
-
-// ACREDITO QUE OS PROBLEMAS DE SHIFT/REDUCE ESTEJAM SENDO CAUSADOS POR CAUSA DESSAS REGRAS
-// local-declarations: local-declarations var-declaration { printf("local-declarations  ->  var-declaration local-declarations\n"); }
-//                   | local-declarations statement-list { printf("local-declarations  ->  statement-list local-declarations\n"); }
-//                   | %empty { printf("local-declarations  ->\n"); }
-// ;
 local-declarations: statement-list { printf("local-declarations  ->  statement-list\n"); }
                   | %empty { printf("local-declarations  ->\n"); }
 ;
 statement-list: statement-list statement { printf("statement-list  ->  statement-list statement\n"); }
               | statement { printf("statement-list  ->  statement\n"); }
 ;
-// statement: compound-stmt { printf("statement  ->  compound-stmt \n"); }
-//          | conditional-stmt { printf("statement  ->  conditional-stmt \n" ); }
-//          | iteration-stmt { printf("statement  ->  iteration-stmt \n" ); }
-//          | expression-stmt { printf("statement  ->  expression-stmt \n" ); }
-//          | return-stmt { printf("statement  ->  return-stmt \n" ); }
-//          | var-declaration { printf("statement  ->  var-declaration \n"); }
-// ;
-
 statement: compound-stmt { printf("statement  ->  compound-stmt \n"); }
          | conditional-stmt { printf("statement  ->  conditional-stmt \n" ); }
          | iteration-stmt { printf("statement  ->  iteration-stmt \n" ); }
@@ -136,24 +124,18 @@ statement: compound-stmt { printf("statement  ->  compound-stmt \n"); }
          | var-declaration { printf("statement  ->  var-declaration \n"); }
          | forall-stmt { printf("statement  ->  forall-stmt \n"); }
 ;
-
 forall-statement: compound-stmt { printf("statement  ->  compound-stmt \n"); }
                 | conditional-stmt { printf("statement  ->  conditional-stmt \n" ); }
                 | iteration-stmt { printf("statement  ->  iteration-stmt \n" ); }
                 | expression-stmt { printf("statement  ->  expression-stmt \n" ); }
                 | forall-stmt { printf("statement  ->  forall-stmt \n"); }
 ;
-
-// if-statement:;
-// for-statement:;
-
 // https://www.epaperpress.com/lexandyacc/if.html - 8/4
 conditional-stmt: IF '(' expression ')' statement %prec IFX { printf("conditional-stmt  ->  if ( expression ) statement \n"); }
                 | IF '(' expression ')' statement ELSE statement { printf("conditional-stmt  ->  if ( expression ) statement else statement\n"); }
                 | IF setop-in statement %prec IFX { printf("conditional-stmt  ->  if ( expression ) statement \n"); }
                 | IF setop-in statement ELSE statement { printf("conditional-stmt  ->  if ( expression ) statement else statement\n"); }
 ;
-// https://www.lysator.liu.se/c/ANSI-C-grammar-y.html - 8/4
 iteration-stmt: FOR '(' expression-stmt expression-stmt expression ')' statement { printf("iteration-stmt  ->  for ( expression ; expression ; expression ) statement\n"); }
 ;
 
@@ -166,20 +148,11 @@ expression-stmt: expression ';' { printf("expression-stmt  ->  expression ;\n");
 return-stmt: RETURN ';'
            | RETURN expression ';' { printf("return-stmt  ->  return ; \n"); }
 ;
-
 expression: ID '=' expression { printf("expression  ->  %s = expression ;\n", $1); }
           | simple-expression { printf("expression  ->  simple-expression ;\n"); }
           | set-expression { printf("expression  ->  set-expression ;\n"); }
           | io-expression { printf("expression  ->  io-expression ;\n"); }
 ;
-// simple-expression: logop-una relational-exp { printf("simple-expression  ->  logop-una relational-exp\n"); }
-//                  | relational-exp logop-bin relational-exp { printf("simple-expression  ->  relational-exp logop-bin relational-exp\n"); }
-//                  | relational-exp { printf("simple-expression  ->  relational-exp\n"); }
-// ;
-// simple-expression: logop-una relational-exp { printf("simple-expression  ->  logop-una relational-exp\n"); }
-//                  | simple-expression logop-bin relational-exp { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
-//                  | relational-exp { printf("simple-expression  ->  relational-exp\n"); }
-// ;
 simple-expression: logop-una relational-exp { printf("simple-expression  ->  logop-una relational-exp simple-expression\n"); }
                  | logop-una set-expression { printf("simple-expression  ->  logop-una relational-exp simple-expression\n"); }
                  | simple-expression logop-bin relational-exp { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
@@ -192,9 +165,6 @@ simple-expression: logop-una relational-exp { printf("simple-expression  ->  log
                  | set-expression logop-bin logop-una set-expression { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
                  | relational-exp { printf("simple-expression  ->  relational-exp\n"); }
 ;
-// relational-exp: arithm-add-exp relop arithm-add-exp { printf("relational-exp  ->  arithm-add-exp relop arithm-add-exp\n"); }
-//               | arithm-add-exp { printf("relational-exp  ->  arithm-add-exp\n"); }
-// ;
 relational-exp: relational-exp relop arithm-add-exp { printf("relational-exp  ->  arithm-add-exp relop arithm-add-exp\n"); }
               | arithm-add-exp { printf("relational-exp  ->  arithm-add-exp\n"); }
 ;
@@ -234,7 +204,6 @@ set-expression: setop-in { printf("set-expressions  ->  setop-in\n"); }
               | setop-add { printf("set-expressions  ->  setop-add\n"); }
               | setop-remove { printf("set-expressions  ->  setop-remove\n"); }
               | setop-exists { printf("set-expressions  ->  setop-exists\n"); }
-              // | setop-forall { printf("set-expressions  ->  setop-forall\n"); }
 ;
 setop-in: '(' expression IN_OP expression ')' { printf("setop-in  ->  ( expression IN_OP expression ) \n"); }
 ;
@@ -246,8 +215,6 @@ setop-remove: REMOVE_OP setop-in { printf("setop-remove  ->  remove setop-in\n")
 ;
 setop-exists: EXISTS_OP '(' ID IN_OP ID ')' { printf("setop-exists  ->  exists ( %s in %s )\n", $3, $5); }
 ;
-// setop-forall: FORALL_OP setop-in forall-statement { printf("setop-forall  ->  setop-in forall-statement\n"); }
-// ;
 io-expression: ioop-read { printf("io-expression  ->  ioop-read\n"); }
              | ioop-write { printf("io-expression  ->  ioop-read\n"); }
 ;
@@ -277,7 +244,7 @@ void yyerror(const char *token_name) {
 
 int main(int argc, char *argv[]){
    yyin = fopen(argv[1], "r");
-  //  yylex();
+
    yyparse();
    fclose(yyin);
    yylex_destroy();
