@@ -597,19 +597,19 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_int16 yyrline[] =
 {
-       0,    90,    90,    92,    93,    95,    96,    98,   100,   102,
-     104,   105,   106,   107,   109,   110,   112,   113,   115,   117,
-     119,   120,   122,   123,   125,   126,   127,   128,   129,   130,
-     131,   133,   134,   135,   136,   137,   140,   141,   142,   143,
-     145,   148,   151,   152,   154,   155,   157,   158,   159,   160,
-     162,   163,   164,   165,   166,   167,   168,   169,   170,   171,
-     172,   174,   175,   177,   178,   183,   184,   186,   187,   189,
-     190,   191,   192,   193,   194,   196,   198,   199,   201,   202,
-     203,   204,   205,   206,   208,   209,   211,   212,   214,   215,
-     216,   217,   218,   220,   222,   224,   226,   228,   230,   231,
-     233,   235,   236,   238,   239,   241,   243,   244,   246,   247
+       0,   137,   137,   139,   140,   142,   143,   145,   147,   149,
+     151,   152,   153,   154,   156,   157,   159,   160,   162,   164,
+     166,   167,   169,   170,   172,   173,   174,   175,   176,   177,
+     178,   180,   181,   182,   183,   184,   187,   188,   189,   190,
+     192,   195,   198,   199,   201,   202,   204,   205,   206,   207,
+     209,   210,   211,   212,   213,   214,   215,   216,   217,   218,
+     219,   221,   222,   224,   225,   230,   231,   233,   234,   236,
+     237,   238,   239,   240,   241,   243,   245,   246,   248,   249,
+     250,   251,   252,   253,   255,   256,   258,   259,   261,   262,
+     263,   264,   265,   267,   269,   271,   273,   275,   277,   278,
+     280,   282,   283,   285,   286,   288,   290,   291,   293,   294
 };
 #endif
 
@@ -3245,649 +3245,655 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: declaration-list  */
-#line 90 "anasin.y"
+#line 137 "anasin.y"
                           { printf("program\n"); }
 #line 3251 "anasin.tab.c"
     break;
 
   case 3: /* declaration-list: declaration-list declaration  */
-#line 92 "anasin.y"
+#line 139 "anasin.y"
                                                { printf("declaration-list  ->  declaration-list declaration\n"); }
 #line 3257 "anasin.tab.c"
     break;
 
   case 4: /* declaration-list: declaration  */
-#line 93 "anasin.y"
+#line 140 "anasin.y"
                               { printf("declaration-list  ->  declaration\n"); }
 #line 3263 "anasin.tab.c"
     break;
 
   case 5: /* declaration: var-declaration  */
-#line 95 "anasin.y"
+#line 142 "anasin.y"
                              { printf("declaration  ->  var-declaration\n"); }
 #line 3269 "anasin.tab.c"
     break;
 
   case 6: /* declaration: func-declaration  */
-#line 96 "anasin.y"
+#line 143 "anasin.y"
                               { printf("declaration  ->  func-declaration\n"); }
 #line 3275 "anasin.tab.c"
     break;
 
   case 7: /* var-declaration: variable ';'  */
-#line 98 "anasin.y"
+#line 145 "anasin.y"
                               { printf("var declaration  ->  variable ;\n"); }
 #line 3281 "anasin.tab.c"
     break;
 
   case 8: /* variable: type-specifier ID  */
-#line 100 "anasin.y"
+#line 147 "anasin.y"
                             { printf("variable  ->  type-specifier %s\n", (yyvsp[0].token_name)); }
 #line 3287 "anasin.tab.c"
     break;
 
   case 9: /* func-declaration: type-specifier ID '(' parameters ')' compound-stmt  */
-#line 102 "anasin.y"
+#line 149 "anasin.y"
                                                                      { printf("func-declaration  ->  type-specifier %s ( parameters ) compount-stmt\n", (yyvsp[-4].token_name)); }
 #line 3293 "anasin.tab.c"
     break;
 
   case 10: /* type-specifier: TYPEINT  */
-#line 104 "anasin.y"
+#line 151 "anasin.y"
                         { printf("type-specifier  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3299 "anasin.tab.c"
     break;
 
   case 11: /* type-specifier: TYPEFLOAT  */
-#line 105 "anasin.y"
+#line 152 "anasin.y"
                           { printf("type-specifier  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3305 "anasin.tab.c"
     break;
 
   case 12: /* type-specifier: TYPEELEM  */
-#line 106 "anasin.y"
+#line 153 "anasin.y"
                          { printf("type-specifier  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3311 "anasin.tab.c"
     break;
 
   case 13: /* type-specifier: TYPESET  */
-#line 107 "anasin.y"
+#line 154 "anasin.y"
                         { printf("type-specifier  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3317 "anasin.tab.c"
     break;
 
   case 14: /* parameters: parameter-list  */
-#line 109 "anasin.y"
+#line 156 "anasin.y"
                            { printf("parameters  ->  parameter-list\n"); }
 #line 3323 "anasin.tab.c"
     break;
 
   case 15: /* parameters: %empty  */
-#line 110 "anasin.y"
+#line 157 "anasin.y"
                    { printf("parameters  ->\n"); }
 #line 3329 "anasin.tab.c"
     break;
 
   case 16: /* parameter-list: parameter-list ',' parameter  */
-#line 112 "anasin.y"
+#line 159 "anasin.y"
                                              { printf("parameter-list  ->  parameter-list , parameter\n"); }
 #line 3335 "anasin.tab.c"
     break;
 
   case 17: /* parameter-list: parameter  */
-#line 113 "anasin.y"
+#line 160 "anasin.y"
                           { printf("parameter-list  ->  parameter\n"); }
 #line 3341 "anasin.tab.c"
     break;
 
   case 18: /* parameter: variable  */
-#line 115 "anasin.y"
+#line 162 "anasin.y"
                     { printf("parameter  ->  variable\n"); }
 #line 3347 "anasin.tab.c"
     break;
 
   case 19: /* compound-stmt: '{' local-declarations '}'  */
-#line 117 "anasin.y"
+#line 164 "anasin.y"
                                           { printf("compound-stmt  ->  { local-declarations }\n"); }
 #line 3353 "anasin.tab.c"
     break;
 
   case 20: /* local-declarations: statement-list  */
-#line 119 "anasin.y"
+#line 166 "anasin.y"
                                    { printf("local-declarations  ->  statement-list\n"); }
 #line 3359 "anasin.tab.c"
     break;
 
   case 21: /* local-declarations: %empty  */
-#line 120 "anasin.y"
+#line 167 "anasin.y"
                            { printf("local-declarations  ->\n"); }
 #line 3365 "anasin.tab.c"
     break;
 
   case 22: /* statement-list: statement-list statement  */
-#line 122 "anasin.y"
+#line 169 "anasin.y"
                                          { printf("statement-list  ->  statement-list statement\n"); }
 #line 3371 "anasin.tab.c"
     break;
 
   case 23: /* statement-list: statement  */
-#line 123 "anasin.y"
+#line 170 "anasin.y"
                           { printf("statement-list  ->  statement\n"); }
 #line 3377 "anasin.tab.c"
     break;
 
   case 24: /* statement: compound-stmt  */
-#line 125 "anasin.y"
+#line 172 "anasin.y"
                          { printf("statement  ->  compound-stmt \n"); }
 #line 3383 "anasin.tab.c"
     break;
 
   case 25: /* statement: conditional-stmt  */
-#line 126 "anasin.y"
+#line 173 "anasin.y"
                             { printf("statement  ->  conditional-stmt \n" ); }
 #line 3389 "anasin.tab.c"
     break;
 
   case 26: /* statement: iteration-stmt  */
-#line 127 "anasin.y"
+#line 174 "anasin.y"
                           { printf("statement  ->  iteration-stmt \n" ); }
 #line 3395 "anasin.tab.c"
     break;
 
   case 27: /* statement: expression-stmt  */
-#line 128 "anasin.y"
+#line 175 "anasin.y"
                            { printf("statement  ->  expression-stmt \n" ); }
 #line 3401 "anasin.tab.c"
     break;
 
   case 28: /* statement: return-stmt  */
-#line 129 "anasin.y"
+#line 176 "anasin.y"
                        { printf("statement  ->  return-stmt \n" ); }
 #line 3407 "anasin.tab.c"
     break;
 
   case 29: /* statement: var-declaration  */
-#line 130 "anasin.y"
+#line 177 "anasin.y"
                            { printf("statement  ->  var-declaration \n"); }
 #line 3413 "anasin.tab.c"
     break;
 
   case 30: /* statement: forall-stmt  */
-#line 131 "anasin.y"
+#line 178 "anasin.y"
                        { printf("statement  ->  forall-stmt \n"); }
 #line 3419 "anasin.tab.c"
     break;
 
   case 31: /* forall-statement: compound-stmt  */
-#line 133 "anasin.y"
+#line 180 "anasin.y"
                                 { printf("statement  ->  compound-stmt \n"); }
 #line 3425 "anasin.tab.c"
     break;
 
   case 32: /* forall-statement: conditional-stmt  */
-#line 134 "anasin.y"
+#line 181 "anasin.y"
                                    { printf("statement  ->  conditional-stmt \n" ); }
 #line 3431 "anasin.tab.c"
     break;
 
   case 33: /* forall-statement: iteration-stmt  */
-#line 135 "anasin.y"
+#line 182 "anasin.y"
                                  { printf("statement  ->  iteration-stmt \n" ); }
 #line 3437 "anasin.tab.c"
     break;
 
   case 34: /* forall-statement: expression-stmt  */
-#line 136 "anasin.y"
+#line 183 "anasin.y"
                                   { printf("statement  ->  expression-stmt \n" ); }
 #line 3443 "anasin.tab.c"
     break;
 
   case 35: /* forall-statement: forall-stmt  */
-#line 137 "anasin.y"
+#line 184 "anasin.y"
                               { printf("statement  ->  forall-stmt \n"); }
 #line 3449 "anasin.tab.c"
     break;
 
   case 36: /* conditional-stmt: IF '(' expression ')' statement  */
-#line 140 "anasin.y"
+#line 187 "anasin.y"
                                                             { printf("conditional-stmt  ->  if ( expression ) statement \n"); }
 #line 3455 "anasin.tab.c"
     break;
 
   case 37: /* conditional-stmt: IF '(' expression ')' statement ELSE statement  */
-#line 141 "anasin.y"
+#line 188 "anasin.y"
                                                                  { printf("conditional-stmt  ->  if ( expression ) statement else statement\n"); }
 #line 3461 "anasin.tab.c"
     break;
 
   case 38: /* conditional-stmt: IF setop-in statement  */
-#line 142 "anasin.y"
+#line 189 "anasin.y"
                                                   { printf("conditional-stmt  ->  if ( expression ) statement \n"); }
 #line 3467 "anasin.tab.c"
     break;
 
   case 39: /* conditional-stmt: IF setop-in statement ELSE statement  */
-#line 143 "anasin.y"
+#line 190 "anasin.y"
                                                        { printf("conditional-stmt  ->  if ( expression ) statement else statement\n"); }
 #line 3473 "anasin.tab.c"
     break;
 
   case 40: /* iteration-stmt: FOR '(' expression-stmt expression-stmt expression ')' statement  */
-#line 145 "anasin.y"
+#line 192 "anasin.y"
                                                                                  { printf("iteration-stmt  ->  for ( expression ; expression ; expression ) statement\n"); }
 #line 3479 "anasin.tab.c"
     break;
 
   case 41: /* forall-stmt: FORALL_OP setop-in forall-statement  */
-#line 148 "anasin.y"
+#line 195 "anasin.y"
                                                  { printf("setop-forall  ->  setop-in forall-statement\n"); }
 #line 3485 "anasin.tab.c"
     break;
 
   case 42: /* expression-stmt: expression ';'  */
-#line 151 "anasin.y"
+#line 198 "anasin.y"
                                 { printf("expression-stmt  ->  expression ;\n"); }
 #line 3491 "anasin.tab.c"
     break;
 
   case 43: /* expression-stmt: ';'  */
-#line 152 "anasin.y"
+#line 199 "anasin.y"
                      { printf("expression-stmt  ->  ; \n"); }
 #line 3497 "anasin.tab.c"
     break;
 
-  case 45: /* return-stmt: RETURN expression ';'  */
-#line 155 "anasin.y"
-                                   { printf("return-stmt  ->  return ; \n"); }
+  case 44: /* return-stmt: RETURN ';'  */
+#line 201 "anasin.y"
+                        { printf("return-stmt  ->  return ; \n"); }
 #line 3503 "anasin.tab.c"
     break;
 
-  case 46: /* expression: ID '=' expression  */
-#line 157 "anasin.y"
-                              { printf("expression  ->  %s = expression ;\n", (yyvsp[-2].token_name)); }
+  case 45: /* return-stmt: RETURN expression ';'  */
+#line 202 "anasin.y"
+                                   { printf("return-stmt  ->  return expression ; \n"); }
 #line 3509 "anasin.tab.c"
     break;
 
-  case 47: /* expression: simple-expression  */
-#line 158 "anasin.y"
-                              { printf("expression  ->  simple-expression ;\n"); }
+  case 46: /* expression: ID '=' expression  */
+#line 204 "anasin.y"
+                              { printf("expression  ->  %s = expression ;\n", (yyvsp[-2].token_name)); }
 #line 3515 "anasin.tab.c"
     break;
 
-  case 48: /* expression: set-expression  */
-#line 159 "anasin.y"
-                           { printf("expression  ->  set-expression ;\n"); }
+  case 47: /* expression: simple-expression  */
+#line 205 "anasin.y"
+                              { printf("expression  ->  simple-expression ;\n"); }
 #line 3521 "anasin.tab.c"
     break;
 
-  case 49: /* expression: io-expression  */
-#line 160 "anasin.y"
-                          { printf("expression  ->  io-expression ;\n"); }
+  case 48: /* expression: set-expression  */
+#line 206 "anasin.y"
+                           { printf("expression  ->  set-expression ;\n"); }
 #line 3527 "anasin.tab.c"
     break;
 
-  case 50: /* simple-expression: logop-una relational-exp  */
-#line 162 "anasin.y"
-                                            { printf("simple-expression  ->  logop-una relational-exp simple-expression\n"); }
+  case 49: /* expression: io-expression  */
+#line 207 "anasin.y"
+                          { printf("expression  ->  io-expression ;\n"); }
 #line 3533 "anasin.tab.c"
     break;
 
-  case 51: /* simple-expression: logop-una set-expression  */
-#line 163 "anasin.y"
+  case 50: /* simple-expression: logop-una relational-exp  */
+#line 209 "anasin.y"
                                             { printf("simple-expression  ->  logop-una relational-exp simple-expression\n"); }
 #line 3539 "anasin.tab.c"
     break;
 
-  case 52: /* simple-expression: simple-expression logop-bin relational-exp  */
-#line 164 "anasin.y"
-                                                              { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
+  case 51: /* simple-expression: logop-una set-expression  */
+#line 210 "anasin.y"
+                                            { printf("simple-expression  ->  logop-una relational-exp simple-expression\n"); }
 #line 3545 "anasin.tab.c"
     break;
 
-  case 53: /* simple-expression: simple-expression logop-bin set-expression  */
-#line 165 "anasin.y"
+  case 52: /* simple-expression: simple-expression logop-bin relational-exp  */
+#line 211 "anasin.y"
                                                               { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
 #line 3551 "anasin.tab.c"
     break;
 
-  case 54: /* simple-expression: set-expression logop-bin relational-exp  */
-#line 166 "anasin.y"
-                                                           { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
+  case 53: /* simple-expression: simple-expression logop-bin set-expression  */
+#line 212 "anasin.y"
+                                                              { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
 #line 3557 "anasin.tab.c"
     break;
 
-  case 55: /* simple-expression: set-expression logop-bin set-expression  */
-#line 167 "anasin.y"
+  case 54: /* simple-expression: set-expression logop-bin relational-exp  */
+#line 213 "anasin.y"
                                                            { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
 #line 3563 "anasin.tab.c"
     break;
 
-  case 56: /* simple-expression: simple-expression logop-bin logop-una relational-exp  */
-#line 168 "anasin.y"
-                                                                        { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
+  case 55: /* simple-expression: set-expression logop-bin set-expression  */
+#line 214 "anasin.y"
+                                                           { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
 #line 3569 "anasin.tab.c"
     break;
 
-  case 57: /* simple-expression: simple-expression logop-bin logop-una set-expression  */
-#line 169 "anasin.y"
+  case 56: /* simple-expression: simple-expression logop-bin logop-una relational-exp  */
+#line 215 "anasin.y"
                                                                         { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
 #line 3575 "anasin.tab.c"
     break;
 
-  case 58: /* simple-expression: set-expression logop-bin logop-una relational-exp  */
-#line 170 "anasin.y"
-                                                                     { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
+  case 57: /* simple-expression: simple-expression logop-bin logop-una set-expression  */
+#line 216 "anasin.y"
+                                                                        { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
 #line 3581 "anasin.tab.c"
     break;
 
-  case 59: /* simple-expression: set-expression logop-bin logop-una set-expression  */
-#line 171 "anasin.y"
+  case 58: /* simple-expression: set-expression logop-bin logop-una relational-exp  */
+#line 217 "anasin.y"
                                                                      { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
 #line 3587 "anasin.tab.c"
     break;
 
-  case 60: /* simple-expression: relational-exp  */
-#line 172 "anasin.y"
-                                  { printf("simple-expression  ->  relational-exp\n"); }
+  case 59: /* simple-expression: set-expression logop-bin logop-una set-expression  */
+#line 218 "anasin.y"
+                                                                     { printf("simple-expression  ->  simple-expression logop-bin relational-exp\n"); }
 #line 3593 "anasin.tab.c"
     break;
 
-  case 61: /* relational-exp: relational-exp relop arithm-add-exp  */
-#line 174 "anasin.y"
-                                                    { printf("relational-exp  ->  arithm-add-exp relop arithm-add-exp\n"); }
+  case 60: /* simple-expression: relational-exp  */
+#line 219 "anasin.y"
+                                  { printf("simple-expression  ->  relational-exp\n"); }
 #line 3599 "anasin.tab.c"
     break;
 
-  case 62: /* relational-exp: arithm-add-exp  */
-#line 175 "anasin.y"
-                               { printf("relational-exp  ->  arithm-add-exp\n"); }
+  case 61: /* relational-exp: relational-exp relop arithm-add-exp  */
+#line 221 "anasin.y"
+                                                    { printf("relational-exp  ->  arithm-add-exp relop arithm-add-exp\n"); }
 #line 3605 "anasin.tab.c"
     break;
 
-  case 63: /* arithm-add-exp: arithm-add-exp ariop-add arithm-mul-exp  */
-#line 177 "anasin.y"
-                                                        { printf("arithm-add-exp  ->  arithm-add-exp ariop-add arithm-mul-exp\n"); }
+  case 62: /* relational-exp: arithm-add-exp  */
+#line 222 "anasin.y"
+                               { printf("relational-exp  ->  arithm-add-exp\n"); }
 #line 3611 "anasin.tab.c"
     break;
 
-  case 64: /* arithm-add-exp: arithm-mul-exp  */
-#line 178 "anasin.y"
-                               { printf("arithm-add-exp  ->  arithm-mul-exp\n"); }
+  case 63: /* arithm-add-exp: arithm-add-exp ariop-add arithm-mul-exp  */
+#line 224 "anasin.y"
+                                                        { printf("arithm-add-exp  ->  arithm-add-exp ariop-add arithm-mul-exp\n"); }
 #line 3617 "anasin.tab.c"
     break;
 
-  case 65: /* arithm-mul-exp: arithm-mul-exp ariop-mul unary-minus-exp  */
-#line 183 "anasin.y"
-                                                         { printf("arithm-mul-exp  ->  arithm-mul-exp ariop-mul unary-minus-exp\n"); }
+  case 64: /* arithm-add-exp: arithm-mul-exp  */
+#line 225 "anasin.y"
+                               { printf("arithm-add-exp  ->  arithm-mul-exp\n"); }
 #line 3623 "anasin.tab.c"
     break;
 
-  case 66: /* arithm-mul-exp: unary-minus-exp  */
-#line 184 "anasin.y"
-                                { printf("arithm-mul-exp  ->  unary-minus-exp\n"); }
+  case 65: /* arithm-mul-exp: arithm-mul-exp ariop-mul unary-minus-exp  */
+#line 230 "anasin.y"
+                                                         { printf("arithm-mul-exp  ->  arithm-mul-exp ariop-mul unary-minus-exp\n"); }
 #line 3629 "anasin.tab.c"
     break;
 
-  case 67: /* unary-minus-exp: '-' factor  */
-#line 186 "anasin.y"
-                                      { printf("unary-minus-exp  ->  '-' factor\n"); }
+  case 66: /* arithm-mul-exp: unary-minus-exp  */
+#line 231 "anasin.y"
+                                { printf("arithm-mul-exp  ->  unary-minus-exp\n"); }
 #line 3635 "anasin.tab.c"
     break;
 
-  case 68: /* unary-minus-exp: factor  */
-#line 187 "anasin.y"
-                       { printf("unary-minus-exp  ->  factor\n"); }
+  case 67: /* unary-minus-exp: '-' factor  */
+#line 233 "anasin.y"
+                                      { printf("unary-minus-exp  ->  '-' factor\n"); }
 #line 3641 "anasin.tab.c"
     break;
 
-  case 69: /* factor: '(' expression ')'  */
-#line 189 "anasin.y"
-                           { printf("factor  ->  ( expression )\n"); }
+  case 68: /* unary-minus-exp: factor  */
+#line 234 "anasin.y"
+                       { printf("unary-minus-exp  ->  factor\n"); }
 #line 3647 "anasin.tab.c"
     break;
 
-  case 70: /* factor: func-call  */
-#line 190 "anasin.y"
-                  { printf("factor  ->  func-call\n"); }
+  case 69: /* factor: '(' expression ')'  */
+#line 236 "anasin.y"
+                           { printf("factor  ->  ( expression )\n"); }
 #line 3653 "anasin.tab.c"
     break;
 
-  case 71: /* factor: ID  */
-#line 191 "anasin.y"
-           { printf("factor  ->  %s\n", (yyvsp[0].token_name)); }
+  case 70: /* factor: func-call  */
+#line 237 "anasin.y"
+                  { printf("factor  ->  func-call\n"); }
 #line 3659 "anasin.tab.c"
     break;
 
-  case 72: /* factor: INT  */
-#line 192 "anasin.y"
-            { printf("factor  ->  %s\n", (yyvsp[0].token_name)); }
+  case 71: /* factor: ID  */
+#line 238 "anasin.y"
+           { printf("factor  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3665 "anasin.tab.c"
     break;
 
-  case 73: /* factor: FLOAT  */
-#line 193 "anasin.y"
-              { printf("factor  ->  %s\n", (yyvsp[0].token_name)); }
+  case 72: /* factor: INT  */
+#line 239 "anasin.y"
+            { printf("factor  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3671 "anasin.tab.c"
     break;
 
-  case 74: /* factor: EMPTY  */
-#line 194 "anasin.y"
+  case 73: /* factor: FLOAT  */
+#line 240 "anasin.y"
               { printf("factor  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3677 "anasin.tab.c"
     break;
 
-  case 75: /* logop-una: '!'  */
-#line 196 "anasin.y"
-                { printf("logop-una  ->  !\n"); }
+  case 74: /* factor: EMPTY  */
+#line 241 "anasin.y"
+              { printf("factor  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3683 "anasin.tab.c"
     break;
 
-  case 76: /* logop-bin: AND  */
-#line 198 "anasin.y"
-               { printf("logop-bin  ->  &&\n"); }
+  case 75: /* logop-una: '!'  */
+#line 243 "anasin.y"
+                { printf("logop-una  ->  !\n"); }
 #line 3689 "anasin.tab.c"
     break;
 
-  case 77: /* logop-bin: OR  */
-#line 199 "anasin.y"
-              { printf("logop-bin  ->  ||\n"); }
+  case 76: /* logop-bin: AND  */
+#line 245 "anasin.y"
+               { printf("logop-bin  ->  &&\n"); }
 #line 3695 "anasin.tab.c"
     break;
 
-  case 78: /* relop: '<'  */
-#line 201 "anasin.y"
-           { printf("relop  ->  <\n"); }
+  case 77: /* logop-bin: OR  */
+#line 246 "anasin.y"
+              { printf("logop-bin  ->  ||\n"); }
 #line 3701 "anasin.tab.c"
     break;
 
-  case 79: /* relop: LTE  */
-#line 202 "anasin.y"
-           { printf("relop  ->  <=\n"); }
+  case 78: /* relop: '<'  */
+#line 248 "anasin.y"
+           { printf("relop  ->  <\n"); }
 #line 3707 "anasin.tab.c"
     break;
 
-  case 80: /* relop: '>'  */
-#line 203 "anasin.y"
-           { printf("relop  ->  >\n"); }
+  case 79: /* relop: LTE  */
+#line 249 "anasin.y"
+           { printf("relop  ->  <=\n"); }
 #line 3713 "anasin.tab.c"
     break;
 
-  case 81: /* relop: GTE  */
-#line 204 "anasin.y"
-           { printf("relop  ->  >=\n"); }
+  case 80: /* relop: '>'  */
+#line 250 "anasin.y"
+           { printf("relop  ->  >\n"); }
 #line 3719 "anasin.tab.c"
     break;
 
-  case 82: /* relop: EQ  */
-#line 205 "anasin.y"
-          { printf("relop  ->  ==\n"); }
+  case 81: /* relop: GTE  */
+#line 251 "anasin.y"
+           { printf("relop  ->  >=\n"); }
 #line 3725 "anasin.tab.c"
     break;
 
-  case 83: /* relop: NEQ  */
-#line 206 "anasin.y"
-           { printf("relop  ->  !=\n"); }
+  case 82: /* relop: EQ  */
+#line 252 "anasin.y"
+          { printf("relop  ->  ==\n"); }
 #line 3731 "anasin.tab.c"
     break;
 
-  case 84: /* ariop-add: '+'  */
-#line 208 "anasin.y"
-               { printf("ariop-add  ->  +\n"); }
+  case 83: /* relop: NEQ  */
+#line 253 "anasin.y"
+           { printf("relop  ->  !=\n"); }
 #line 3737 "anasin.tab.c"
     break;
 
-  case 85: /* ariop-add: '-'  */
-#line 209 "anasin.y"
-                { printf("ariop-add  ->  -\n"); }
+  case 84: /* ariop-add: '+'  */
+#line 255 "anasin.y"
+               { printf("ariop-add  ->  +\n"); }
 #line 3743 "anasin.tab.c"
     break;
 
-  case 86: /* ariop-mul: '*'  */
-#line 211 "anasin.y"
-               { printf("ariop-mul  ->  *\n"); }
+  case 85: /* ariop-add: '-'  */
+#line 256 "anasin.y"
+                { printf("ariop-add  ->  -\n"); }
 #line 3749 "anasin.tab.c"
     break;
 
-  case 87: /* ariop-mul: '/'  */
-#line 212 "anasin.y"
-               { printf("ariop-mul  ->  /\n"); }
+  case 86: /* ariop-mul: '*'  */
+#line 258 "anasin.y"
+               { printf("ariop-mul  ->  *\n"); }
 #line 3755 "anasin.tab.c"
     break;
 
-  case 88: /* set-expression: setop-in  */
-#line 214 "anasin.y"
-                         { printf("set-expressions  ->  setop-in\n"); }
+  case 87: /* ariop-mul: '/'  */
+#line 259 "anasin.y"
+               { printf("ariop-mul  ->  /\n"); }
 #line 3761 "anasin.tab.c"
     break;
 
-  case 89: /* set-expression: setop-is-set  */
-#line 215 "anasin.y"
-                             { printf("set-expressions  ->  setop-is-set\n"); }
+  case 88: /* set-expression: setop-in  */
+#line 261 "anasin.y"
+                         { printf("set-expressions  ->  setop-in\n"); }
 #line 3767 "anasin.tab.c"
     break;
 
-  case 90: /* set-expression: setop-add  */
-#line 216 "anasin.y"
-                          { printf("set-expressions  ->  setop-add\n"); }
+  case 89: /* set-expression: setop-is-set  */
+#line 262 "anasin.y"
+                             { printf("set-expressions  ->  setop-is-set\n"); }
 #line 3773 "anasin.tab.c"
     break;
 
-  case 91: /* set-expression: setop-remove  */
-#line 217 "anasin.y"
-                             { printf("set-expressions  ->  setop-remove\n"); }
+  case 90: /* set-expression: setop-add  */
+#line 263 "anasin.y"
+                          { printf("set-expressions  ->  setop-add\n"); }
 #line 3779 "anasin.tab.c"
     break;
 
-  case 92: /* set-expression: setop-exists  */
-#line 218 "anasin.y"
-                             { printf("set-expressions  ->  setop-exists\n"); }
+  case 91: /* set-expression: setop-remove  */
+#line 264 "anasin.y"
+                             { printf("set-expressions  ->  setop-remove\n"); }
 #line 3785 "anasin.tab.c"
     break;
 
-  case 93: /* setop-in: '(' expression IN_OP expression ')'  */
-#line 220 "anasin.y"
-                                              { printf("setop-in  ->  ( expression IN_OP expression ) \n"); }
+  case 92: /* set-expression: setop-exists  */
+#line 265 "anasin.y"
+                             { printf("set-expressions  ->  setop-exists\n"); }
 #line 3791 "anasin.tab.c"
     break;
 
-  case 94: /* setop-is-set: IS_SET_OP '(' ID ')'  */
-#line 222 "anasin.y"
-                                   { printf("setop-is-set  ->  is_set ( %s )\n", (yyvsp[-1].token_name)); }
+  case 93: /* setop-in: '(' expression IN_OP expression ')'  */
+#line 267 "anasin.y"
+                                              { printf("setop-in  ->  ( expression IN_OP expression ) \n"); }
 #line 3797 "anasin.tab.c"
     break;
 
-  case 95: /* setop-add: ADD_OP setop-in  */
-#line 224 "anasin.y"
-                           { printf("setop-add  ->  add setop-in\n"); }
+  case 94: /* setop-is-set: IS_SET_OP '(' ID ')'  */
+#line 269 "anasin.y"
+                                   { printf("setop-is-set  ->  is_set ( %s )\n", (yyvsp[-1].token_name)); }
 #line 3803 "anasin.tab.c"
     break;
 
-  case 96: /* setop-remove: REMOVE_OP setop-in  */
-#line 226 "anasin.y"
-                                 { printf("setop-remove  ->  remove setop-in\n"); }
+  case 95: /* setop-add: ADD_OP setop-in  */
+#line 271 "anasin.y"
+                           { printf("setop-add  ->  add setop-in\n"); }
 #line 3809 "anasin.tab.c"
     break;
 
-  case 97: /* setop-exists: EXISTS_OP '(' ID IN_OP ID ')'  */
-#line 228 "anasin.y"
-                                            { printf("setop-exists  ->  exists ( %s in %s )\n", (yyvsp[-3].token_name), (yyvsp[-1].token_name)); }
+  case 96: /* setop-remove: REMOVE_OP setop-in  */
+#line 273 "anasin.y"
+                                 { printf("setop-remove  ->  remove setop-in\n"); }
 #line 3815 "anasin.tab.c"
     break;
 
-  case 98: /* io-expression: ioop-read  */
-#line 230 "anasin.y"
-                         { printf("io-expression  ->  ioop-read\n"); }
+  case 97: /* setop-exists: EXISTS_OP '(' ID IN_OP ID ')'  */
+#line 275 "anasin.y"
+                                            { printf("setop-exists  ->  exists ( %s in %s )\n", (yyvsp[-3].token_name), (yyvsp[-1].token_name)); }
 #line 3821 "anasin.tab.c"
     break;
 
-  case 99: /* io-expression: ioop-write  */
-#line 231 "anasin.y"
-                          { printf("io-expression  ->  ioop-read\n"); }
+  case 98: /* io-expression: ioop-read  */
+#line 277 "anasin.y"
+                         { printf("io-expression  ->  ioop-read\n"); }
 #line 3827 "anasin.tab.c"
     break;
 
-  case 100: /* ioop-read: READ '(' ID ')'  */
-#line 233 "anasin.y"
-                           { printf("ioop-read  ->  read ( %s ) \n", (yyvsp[-1].token_name)); }
+  case 99: /* io-expression: ioop-write  */
+#line 278 "anasin.y"
+                          { printf("io-expression  ->  ioop-read\n"); }
 #line 3833 "anasin.tab.c"
     break;
 
-  case 101: /* ioop-write: WRITE '(' word ')'  */
-#line 235 "anasin.y"
-                               { printf("ioop-write  ->  write ( word ) \n"); }
+  case 100: /* ioop-read: READ '(' ID ')'  */
+#line 280 "anasin.y"
+                           { printf("ioop-read  ->  read ( %s ) \n", (yyvsp[-1].token_name)); }
 #line 3839 "anasin.tab.c"
     break;
 
-  case 102: /* ioop-write: WRITELN '(' word ')'  */
-#line 236 "anasin.y"
-                                 { printf("ioop-write  ->  writeln ( word ) \n"); }
+  case 101: /* ioop-write: WRITE '(' word ')'  */
+#line 282 "anasin.y"
+                               { printf("ioop-write  ->  write ( word ) \n"); }
 #line 3845 "anasin.tab.c"
     break;
 
-  case 103: /* word: CHAR  */
-#line 238 "anasin.y"
-           { printf("word  ->  %s\n", (yyvsp[0].token_name)); }
+  case 102: /* ioop-write: WRITELN '(' word ')'  */
+#line 283 "anasin.y"
+                                 { printf("ioop-write  ->  writeln ( word ) \n"); }
 #line 3851 "anasin.tab.c"
     break;
 
-  case 104: /* word: STRING  */
-#line 239 "anasin.y"
-             { printf("word  ->  %s\n", (yyvsp[0].token_name)); }
+  case 103: /* word: CHAR  */
+#line 285 "anasin.y"
+           { printf("word  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3857 "anasin.tab.c"
     break;
 
-  case 105: /* func-call: ID '(' arguments ')'  */
-#line 241 "anasin.y"
-                                { printf("func-call  ->  %s ( arguments )\n", (yyvsp[-3].token_name)); }
+  case 104: /* word: STRING  */
+#line 286 "anasin.y"
+             { printf("word  ->  %s\n", (yyvsp[0].token_name)); }
 #line 3863 "anasin.tab.c"
     break;
 
-  case 106: /* arguments: args-list  */
-#line 243 "anasin.y"
-                     { printf("arguments  ->  args-list\n"); }
+  case 105: /* func-call: ID '(' arguments ')'  */
+#line 288 "anasin.y"
+                                { printf("func-call  ->  %s ( arguments )\n", (yyvsp[-3].token_name)); }
 #line 3869 "anasin.tab.c"
     break;
 
-  case 107: /* arguments: %empty  */
-#line 244 "anasin.y"
-                  { printf("arguments  ->  empty-set\n"); }
+  case 106: /* arguments: args-list  */
+#line 290 "anasin.y"
+                     { printf("arguments  ->  args-list\n"); }
 #line 3875 "anasin.tab.c"
     break;
 
-  case 108: /* args-list: args-list ',' expression  */
-#line 246 "anasin.y"
-                                    { printf("args-list  ->  args-list , expression\n"); }
+  case 107: /* arguments: %empty  */
+#line 291 "anasin.y"
+                  { printf("arguments  ->  empty-set\n"); }
 #line 3881 "anasin.tab.c"
     break;
 
-  case 109: /* args-list: expression  */
-#line 247 "anasin.y"
-                      { printf("args-list  ->  expression\n"); }
+  case 108: /* args-list: args-list ',' expression  */
+#line 293 "anasin.y"
+                                    { printf("args-list  ->  args-list , expression\n"); }
 #line 3887 "anasin.tab.c"
     break;
 
+  case 109: /* args-list: expression  */
+#line 294 "anasin.y"
+                      { printf("args-list  ->  expression\n"); }
+#line 3893 "anasin.tab.c"
+    break;
 
-#line 3891 "anasin.tab.c"
+
+#line 3897 "anasin.tab.c"
 
       default: break;
     }
@@ -4117,7 +4123,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 250 "anasin.y"
+#line 297 "anasin.y"
 
 
 void yyerror(const char *token_name) {

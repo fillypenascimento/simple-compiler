@@ -84,6 +84,53 @@
   struct node* node;
 }
 
+%type <node> program
+%type <node> declaration-list
+%type <node> declaration
+%type <node> var-declaration
+%type <node> variable
+%type <node> func-declaration
+%type <node> type-specifier
+%type <node> parameters
+%type <node> parameter-list
+%type <node> parameter
+%type <node> compound-stmt
+%type <node> local-declarations
+%type <node> statement-list
+%type <node> statement
+%type <node> forall-statement
+%type <node> conditional-stmt
+%type <node> iteration-stmt
+%type <node> forall-stmt
+%type <node> expression-stmt
+%type <node> return-stmt
+%type <node> expression
+%type <node> simple-expression
+%type <node> relational-exp
+%type <node> arithm-add-exp
+%type <node> arithm-mul-exp
+%type <node> unary-minus-exp
+%type <node> factor
+%type <node> logop-una
+%type <node> logop-bin
+%type <node> relop
+%type <node> ariop-add
+%type <node> ariop-mul
+%type <node> set-expression
+%type <node> setop-in
+%type <node> setop-is-set
+%type <node> setop-add
+%type <node> setop-remove
+%type <node> setop-exists
+%type <node> io-expression
+%type <node> ioop-read
+%type <node> ioop-write
+%type <node> word
+%type <node> func-call
+%type <node> arguments
+%type <node> args-list
+
+
 
 %%
 
@@ -151,8 +198,8 @@ forall-stmt: FORALL_OP setop-in forall-statement { printf("setop-forall  ->  set
 expression-stmt: expression ';' { printf("expression-stmt  ->  expression ;\n"); }
                | ';' { printf("expression-stmt  ->  ; \n"); }
 ;
-return-stmt: RETURN ';'
-           | RETURN expression ';' { printf("return-stmt  ->  return ; \n"); }
+return-stmt: RETURN ';' { printf("return-stmt  ->  return ; \n"); }
+           | RETURN expression ';' { printf("return-stmt  ->  return expression ; \n"); }
 ;
 expression: ID '=' expression { printf("expression  ->  %s = expression ;\n", $1); }
           | simple-expression { printf("expression  ->  simple-expression ;\n"); }
