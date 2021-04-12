@@ -13,5 +13,6 @@ int main () {
         float a;
         a = de * -3.2;
         a = b - -1;
+        a = de -2;
     }
 }

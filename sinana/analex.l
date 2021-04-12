@@ -12,8 +12,8 @@ int line = 1, column = 1, error_count = 0;
 %x ML_COMMENT
 
 DIGIT     [0-9]
-INT       -?{DIGIT}+
-FLOAT     -?{DIGIT}+"."{DIGIT}+
+INT       {DIGIT}+
+FLOAT     {DIGIT}+"."{DIGIT}+
 LETTER_   [a-zA-Z]|_
 ID        {LETTER_}({LETTER_}|{DIGIT})*
 CHAR      \'(\\.|[^'\\])\'

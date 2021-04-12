@@ -3,15 +3,20 @@
 %define parse.error verbose
 
 %{
-    #include <stdio.h>
+  #include <stdio.h>
 
-    extern int yylex();
-    extern int yylex_destroy();
-    extern FILE *yyin;
-    extern int line;
-    extern int column;
-    extern int error_count;
-    extern void yyerror(const char *token_name);
+  extern int yylex();
+  extern int yylex_destroy();
+  extern FILE *yyin;
+  extern int line;
+  extern int column;
+  extern int error_count;
+  extern void yyerror(const char *token_name);
+
+  // Entrada da tabela de símbolos
+  typedef struct symbol_table_entry {
+
+  } symbol_table_entry;
 %}
 
 %define lr.type canonical-lr
@@ -72,10 +77,11 @@
 %left LT LTE GT GTE EQ NEQ
 %left PLUS MINUS
 %left MULT DIV
+%precedence NEG
 
 %union{
-    char* token_name;
-    struct node *node;
+  char* token_name;
+  struct node* node;
 }
 
 
@@ -171,8 +177,14 @@ relational-exp: relational-exp relop arithm-add-exp { printf("relational-exp  ->
 arithm-add-exp: arithm-add-exp ariop-add arithm-mul-exp { printf("arithm-add-exp  ->  arithm-add-exp ariop-add arithm-mul-exp\n"); }
               | arithm-mul-exp { printf("arithm-add-exp  ->  arithm-mul-exp\n"); }
 ;
-arithm-mul-exp: arithm-mul-exp ariop-mul factor { printf("arithm-mul-exp  ->  arithm-mul-exp ariop-mul factor\n"); }
-              | factor { printf("arithm-mul-exp  ->  factor\n"); }
+// arithm-mul-exp: arithm-mul-exp ariop-mul factor { printf("arithm-mul-exp  ->  arithm-mul-exp ariop-mul factor\n"); }
+//               | factor { printf("arithm-mul-exp  ->  factor\n"); }
+// ;
+arithm-mul-exp: arithm-mul-exp ariop-mul unary-minus-exp { printf("arithm-mul-exp  ->  arithm-mul-exp ariop-mul unary-minus-exp\n"); }
+              | unary-minus-exp { printf("arithm-mul-exp  ->  unary-minus-exp\n"); }
+;
+unary-minus-exp: '-' factor %prec NEG { printf("unary-minus-exp  ->  '-' factor\n"); }
+              | factor { printf("unary-minus-exp  ->  factor\n"); }
 ;
 factor: '(' expression ')' { printf("factor  ->  ( expression )\n"); }
       | func-call { printf("factor  ->  func-call\n"); }

@@ -101,7 +101,8 @@ extern int yydebug;
     RBRACE = 302,                  /* RBRACE  */
     COMMA = 303,                   /* COMMA  */
     SEMICOLON = 304,               /* SEMICOLON  */
-    IFX = 305                      /* IFX  */
+    IFX = 305,                     /* IFX  */
+    NEG = 306                      /* NEG  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -110,12 +111,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 76 "anasin.y"
+#line 82 "anasin.y"
 
-    char* token_name;
-    struct node *node;
+  char* token_name;
+  struct node* node;
 
-#line 119 "anasin.tab.h"
+#line 120 "anasin.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
