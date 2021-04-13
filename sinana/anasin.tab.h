@@ -111,7 +111,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 82 "anasin.y"
+#line 108 "anasin.y"
 
   char* token_name;
   struct node* node;

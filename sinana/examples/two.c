@@ -15,4 +15,6 @@ int main () {
         a = b - -1;
         a = de -2;
     }
+    int beta;
+    int pord;
 }
