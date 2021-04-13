@@ -15,8 +15,10 @@
   extern int line;
   extern int column;
   extern int error_count;
-  extern void yyerror(const char *token_name);
+  extern void yyerror(const char *tt_name);
 
+
+  // SYMBOL TABLE DECLARATIONS
   // Entrada da tabela de símbolos
   typedef struct symbol_table_entry {
     // https://troydhanson.github.io/uthash/ - 12/04
@@ -47,54 +49,112 @@
 
 %define lr.type canonical-lr
 
-%token <token_name> DIGIT
-%token <token_name> INT
-%token <token_name> FLOAT
-%token <token_name> LETTER_
-%token <token_name> ID
-%token <token_name> CHAR
-%token <token_name> STRING
-%token <token_name> EMPTY
-%token <token_name> PLUS
-%token <token_name> MINUS
-%token <token_name> MULT
-%token <token_name> DIV
-%token <token_name> NOT
-%token <token_name> OR
-%token <token_name> AND
-%token <token_name> LT
-%token <token_name> LTE
-%token <token_name> GT
-%token <token_name> GTE
-%token <token_name> EQ
-%token <token_name> NEQ
-%token <token_name> ASSIGN
-%token <token_name> TYPEINT
-%token <token_name> TYPEFLOAT
-%token <token_name> TYPEELEM
-%token <token_name> TYPESET
-%token <token_name> IF
-%token <token_name> ELSE
-%token <token_name> FOR
-%token <token_name> RETURN
-%token <token_name> READ
-%token <token_name> WRITE
-%token <token_name> WRITELN
-%token <token_name> IN_OP
-%token <token_name> IS_SET_OP
-%token <token_name> ADD_OP
-%token <token_name> REMOVE_OP
-%token <token_name> EXISTS_OP
-%token <token_name> FORALL_OP
-%token <token_name> LPAREN
-%token <token_name> RPAREN
-%token <token_name> LBRACK
-%token <token_name> RBRACK
-%token <token_name> LBRACE
-%token <token_name> RBRACE
-%token <token_name> COMMA
-%token <token_name> SEMICOLON
 
+%union value {
+  char* tt_name; // tt_name: Terminal Token name
+  struct tree_node* nt_node; // nt_node: Nonterminal Token node
+}
+
+// Terminal grammar symbols
+// tt_name stands for Terminal Token name
+%token <tt_name> DIGIT
+%token <tt_name> INT
+%token <tt_name> FLOAT
+%token <tt_name> LETTER_
+%token <tt_name> ID
+%token <tt_name> CHAR
+%token <tt_name> STRING
+%token <tt_name> EMPTY
+%token <tt_name> PLUS
+%token <tt_name> MINUS
+%token <tt_name> MULT
+%token <tt_name> DIV
+%token <tt_name> NOT
+%token <tt_name> OR
+%token <tt_name> AND
+%token <tt_name> LT
+%token <tt_name> LTE
+%token <tt_name> GT
+%token <tt_name> GTE
+%token <tt_name> EQ
+%token <tt_name> NEQ
+%token <tt_name> ASSIGN
+%token <tt_name> TYPEINT
+%token <tt_name> TYPEFLOAT
+%token <tt_name> TYPEELEM
+%token <tt_name> TYPESET
+%token <tt_name> IF
+%token <tt_name> ELSE
+%token <tt_name> FOR
+%token <tt_name> RETURN
+%token <tt_name> READ
+%token <tt_name> WRITE
+%token <tt_name> WRITELN
+%token <tt_name> IN_OP
+%token <tt_name> IS_SET_OP
+%token <tt_name> ADD_OP
+%token <tt_name> REMOVE_OP
+%token <tt_name> EXISTS_OP
+%token <tt_name> FORALL_OP
+%token <tt_name> LPAREN
+%token <tt_name> RPAREN
+%token <tt_name> LBRACK
+%token <tt_name> RBRACK
+%token <tt_name> LBRACE
+%token <tt_name> RBRACE
+%token <tt_name> COMMA
+%token <tt_name> SEMICOLON
+
+// Nonterminal grammar symbols
+// nt_node stands for Nonterminal Token node
+%type <nt_node> program
+%type <nt_node> declaration-list
+%type <nt_node> declaration
+%type <nt_node> var-declaration
+%type <nt_node> variable
+%type <nt_node> func-declaration
+%type <nt_node> type-specifier
+%type <nt_node> parameters
+%type <nt_node> parameter-list
+%type <nt_node> parameter
+%type <nt_node> compound-stmt
+%type <nt_node> local-declarations
+%type <nt_node> statement-list
+%type <nt_node> statement
+%type <nt_node> forall-statement
+%type <nt_node> conditional-stmt
+%type <nt_node> iteration-stmt
+%type <nt_node> forall-stmt
+%type <nt_node> expression-stmt
+%type <nt_node> return-stmt
+%type <nt_node> expression
+%type <nt_node> simple-expression
+%type <nt_node> relational-exp
+%type <nt_node> arithm-add-exp
+%type <nt_node> arithm-mul-exp
+%type <nt_node> unary-minus-exp
+%type <nt_node> factor
+%type <nt_node> logop-una
+%type <nt_node> logop-bin
+%type <nt_node> relop
+%type <nt_node> ariop-add
+%type <nt_node> ariop-mul
+%type <nt_node> set-expression
+%type <nt_node> setop-in
+%type <nt_node> setop-is-set
+%type <nt_node> setop-add
+%type <nt_node> setop-remove
+%type <nt_node> setop-exists
+%type <nt_node> io-expression
+%type <nt_node> ioop-read
+%type <nt_node> ioop-write
+%type <nt_node> word
+%type <nt_node> func-call
+%type <nt_node> arguments
+%type <nt_node> args-list
+
+
+// precedences and associativity
 %nonassoc IFX
 %nonassoc ELSE
 
@@ -104,57 +164,6 @@
 %left PLUS MINUS
 %left MULT DIV
 %precedence NEG
-
-%union{
-  char* token_name;
-  struct node* node;
-}
-
-%type <node> program
-%type <node> declaration-list
-%type <node> declaration
-%type <node> var-declaration
-%type <node> variable
-%type <node> func-declaration
-%type <node> type-specifier
-%type <node> parameters
-%type <node> parameter-list
-%type <node> parameter
-%type <node> compound-stmt
-%type <node> local-declarations
-%type <node> statement-list
-%type <node> statement
-%type <node> forall-statement
-%type <node> conditional-stmt
-%type <node> iteration-stmt
-%type <node> forall-stmt
-%type <node> expression-stmt
-%type <node> return-stmt
-%type <node> expression
-%type <node> simple-expression
-%type <node> relational-exp
-%type <node> arithm-add-exp
-%type <node> arithm-mul-exp
-%type <node> unary-minus-exp
-%type <node> factor
-%type <node> logop-una
-%type <node> logop-bin
-%type <node> relop
-%type <node> ariop-add
-%type <node> ariop-mul
-%type <node> set-expression
-%type <node> setop-in
-%type <node> setop-is-set
-%type <node> setop-add
-%type <node> setop-remove
-%type <node> setop-exists
-%type <node> io-expression
-%type <node> ioop-read
-%type <node> ioop-write
-%type <node> word
-%type <node> func-call
-%type <node> arguments
-%type <node> args-list
 
 
 
@@ -195,12 +204,15 @@ parameter-list: parameter-list ',' parameter { printf("parameter-list  ->  param
 ;
 parameter: variable { printf("parameter  ->  variable\n"); }
 ;
-compound-stmt: '{' local-declarations '}'
-                {
-                  current_scope+=1;
-                  printf("compound-stmt  ->  { local-declarations }\n");
-                  // current_scope = current_scope--;
-                }
+compound-stmt: '{' 
+                 {
+                   current_scope+=1;
+                 } 
+               local-declarations '}'
+                 {
+                   printf("compound-stmt  ->  { local-declarations }\n");
+                   current_scope-=1;
+                 }
 ;
 local-declarations: statement-list { printf("local-declarations  ->  statement-list\n"); }
                   | %empty { printf("local-declarations  ->\n"); }
@@ -408,8 +420,8 @@ void free_symbol_table(){
 }
 
 
-void yyerror(const char *token_name) {
-    printf("yyerror: %s em linha: %d coluna: %d.\n", token_name, line, column);
+void yyerror(const char *tt_name) {
+    printf("yyerror: %s em linha: %d coluna: %d.\n", tt_name, line, column);
 
 }
 

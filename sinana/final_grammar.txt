@@ -1,0 +1,85 @@
+program => declaration-list
+declaration-list => declaration-list declaration | declaration
+declaration => var-declaration | func-declaration
+var-declaration => variable ;
+variable => type-specifier ID
+func-declaration => type-specifier ID ( parameters ) compound-stmt
+type-specifier => TYPEINT | TYPEFLOAT | TYPEELEM | TYPESET
+parameters => parameter-list | %empty
+parameter-list => parameter-list , parameter | parameter
+parameter => variable
+compound-stmt => { local-declarations }
+local-declarations => statement-list | %empty
+statement-list => statement-list statement | statement
+statement => compound-stmt
+           | conditional-stmt
+           | iteration-stmt
+           | expression-stmt
+           | return-stmt
+           | var-declaration
+           | forall-stmt
+forall-statement => compound-stmt
+                  | conditional-stmt
+                  | iteration-stmt
+                  | expression-stmt
+                  | forall-stmt
+conditional-stmt => IF ( expression ) statement
+                  | IF ( expression ) statement ELSE statement
+                  | IF setop-in statement
+                  | IF setop-in statement ELSE statement
+iteration-stmt => FOR ( expression-stmt expression-stmt expression ) statement
+forall-stmt => FORALL_OP setop-in forall-statement
+expression-stmt => expression ; | ;
+return-stmt => RETURN ; | RETURN expression ;
+expression => ID = expression
+            | simple-expression
+            | set-expression
+            | io-expression
+simple-expression => logop-una relational-exp
+                   | logop-una set-expression
+                   | simple-expression logop-bin relational-exp
+                   | simple-expression logop-bin set-expression
+                   | set-expression logop-bin relational-exp
+                   | set-expression logop-bin set-expression
+                   | simple-expression logop-bin logop-una relational-exp
+                   | simple-expression logop-bin logop-una set-expression
+                   | set-expression logop-bin logop-una relational-exp
+                   | set-expression logop-bin logop-una set-expression
+                   | relational-exp
+relational-exp => relational-exp relop arithm-add-exp | arithm-add-exp
+arithm-add-exp => arithm-add-exp ariop-add arithm-mul-exp | arithm-mul-exp
+arithm-mul-exp => arithm-mul-exp ariop-mul unary-minus-exp | unary-minus-exp
+unary-minus-exp => - factor | factor
+factor => ( expression )
+        | func-call
+        | ID
+        | INT
+        | FLOAT
+        | EMPTY
+logop-una => !
+logop-bin => && | ||
+relop => <
+       | <=
+       | >
+       | >=
+       | ==
+       | !=
+ariop-add => + | -
+ariop-mul => * | /
+set-expression => setop-in
+                | setop-is-set
+                | setop-add
+                | setop-remove
+                | setop-exists
+setop-in => ( expression IN_OP expression )
+setop-is-set => IS_SET_OP ( ID )
+setop-add => ADD_OP setop-in
+setop-remove => REMOVE_OP setop-in
+setop-exists => EXISTS_OP ( ID IN_OP ID )
+io-expression => ioop-read | ioop-write
+ioop-read => READ ( ID )
+ioop-write => WRITE ( word ) | WRITELN ( word )
+word => CHAR | STRING
+func-call => ID ( arguments )
+arguments => args-list | %empty
+args-list => args-list , expression | expression

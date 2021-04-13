@@ -861,7 +861,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<TYPEINT,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return TYPEINT;
 }
 	YY_BREAK
@@ -871,7 +871,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<TYPEFLOAT,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return TYPEFLOAT;
 }
 	YY_BREAK
@@ -881,7 +881,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<TYPEELEM,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return TYPEELEM;
 }
 	YY_BREAK
@@ -891,7 +891,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<TYPESET,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return TYPESET;
 }
 	YY_BREAK
@@ -901,7 +901,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<IF>\n");
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return IF;
 }
 	YY_BREAK
@@ -911,7 +911,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<ELSE>\n");
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return ELSE;
 }
 	YY_BREAK
@@ -921,7 +921,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<FOR>\n");
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return FOR;
 }
 	YY_BREAK
@@ -931,7 +931,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<RETURN>\n");
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return RETURN;
 }
 	YY_BREAK
@@ -941,7 +941,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<READ>\n");
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return READ;
 }
 	YY_BREAK
@@ -951,7 +951,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<WRITE>\n");
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return WRITE;
 }
 	YY_BREAK
@@ -961,7 +961,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<WRITELN>\n");
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return WRITELN;
 }
 	YY_BREAK
@@ -971,7 +971,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<IN_OP,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return IN_OP;
 }
 	YY_BREAK
@@ -981,7 +981,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<IS_SET_OP,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return IS_SET_OP;
 }
 	YY_BREAK
@@ -991,7 +991,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<ADD_OP,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return ADD_OP;
 }
 	YY_BREAK
@@ -1001,7 +1001,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<REMOVE_OP,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return REMOVE_OP;
 }
 	YY_BREAK
@@ -1011,7 +1011,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<EXISTS_OP,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return EXISTS_OP;
 }
 	YY_BREAK
@@ -1021,7 +1021,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   printf("<FORALL_OP,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return FORALL_OP;
 }
 	YY_BREAK
@@ -1031,7 +1031,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '+';
 }
 	YY_BREAK
@@ -1041,7 +1041,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '-';
 }
 	YY_BREAK
@@ -1051,7 +1051,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '*';
 }
 	YY_BREAK
@@ -1061,7 +1061,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '/';
 }
 	YY_BREAK
@@ -1071,7 +1071,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '!';
 }
 	YY_BREAK
@@ -1081,7 +1081,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return OR;
 }
 	YY_BREAK
@@ -1091,7 +1091,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return AND;
 }
 	YY_BREAK
@@ -1101,7 +1101,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '<';
 }
 	YY_BREAK
@@ -1111,7 +1111,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return LTE;
 }
 	YY_BREAK
@@ -1121,7 +1121,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '>';
 }
 	YY_BREAK
@@ -1131,7 +1131,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return GTE;
 }
 	YY_BREAK
@@ -1141,7 +1141,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return EQ;
 }
 	YY_BREAK
@@ -1151,7 +1151,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return NEQ;
 }
 	YY_BREAK
@@ -1161,7 +1161,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '=';
 }
 	YY_BREAK
@@ -1171,7 +1171,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '(';
 }
 	YY_BREAK
@@ -1181,7 +1181,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return ')';
 }
 	YY_BREAK
@@ -1191,7 +1191,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   printf("<%s>\n", yytext);
 }
 	YY_BREAK
@@ -1201,7 +1201,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   printf("<%s>\n", yytext);
 }
 	YY_BREAK
@@ -1211,7 +1211,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '{';
 }
 	YY_BREAK
@@ -1221,7 +1221,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return '}';
 }
 	YY_BREAK
@@ -1231,7 +1231,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return ',';
 }
 	YY_BREAK
@@ -1241,7 +1241,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return ';';
 }
 	YY_BREAK
@@ -1251,7 +1251,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return EMPTY;
 }
 	YY_BREAK
@@ -1261,7 +1261,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<INT,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return INT;
 }
 	YY_BREAK
@@ -1271,7 +1271,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<FLOAT,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return FLOAT;
 }
 	YY_BREAK
@@ -1282,7 +1282,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<CHAR,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return CHAR;
 }
 	YY_BREAK
@@ -1293,7 +1293,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<STRING,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return STRING;
 }
 	YY_BREAK
@@ -1303,7 +1303,7 @@ YY_RULE_SETUP
 {
   column += yyleng;
   // printf("<ID,%s>\n", yytext);
-  yylval.token_name = (char*) strdup(yytext);
+  yylval.tt_name = (char*) strdup(yytext);
   return ID;
 }
 	YY_BREAK
