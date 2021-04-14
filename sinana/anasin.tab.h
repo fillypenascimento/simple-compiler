@@ -109,10 +109,10 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-#line 170 "anasin.y"
+#line 34 "anasin.y"
 union value
 {
-#line 170 "anasin.y"
+#line 34 "anasin.y"
 
   char* tt_name; // tt_name: Terminal Token name
   struct tree_node* nt_node; // nt_node: Nonterminal Token node
@@ -120,7 +120,7 @@ union value
 #line 121 "anasin.tab.h"
 
 };
-#line 170 "anasin.y"
+#line 34 "anasin.y"
 typedef union value YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

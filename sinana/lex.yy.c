@@ -970,7 +970,7 @@ YY_RULE_SETUP
 #line 177 "analex.l"
 {
   column += yyleng;
-  printf("<IN_OP,%s>\n", yytext);
+  // printf("<IN_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return IN_OP;
 }
@@ -990,7 +990,7 @@ YY_RULE_SETUP
 #line 191 "analex.l"
 {
   column += yyleng;
-  printf("<ADD_OP,%s>\n", yytext);
+  // printf("<ADD_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return ADD_OP;
 }
@@ -1010,7 +1010,7 @@ YY_RULE_SETUP
 #line 205 "analex.l"
 {
   column += yyleng;
-  printf("<EXISTS_OP,%s>\n", yytext);
+  // printf("<EXISTS_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return EXISTS_OP;
 }

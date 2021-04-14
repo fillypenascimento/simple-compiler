@@ -176,7 +176,7 @@ ML_COMMENT_END  "*/"
 
 {IN_OP} {
   column += yyleng;
-  printf("<IN_OP,%s>\n", yytext);
+  // printf("<IN_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return IN_OP;
 }
@@ -190,7 +190,7 @@ ML_COMMENT_END  "*/"
 
 {ADD_OP} {
   column += yyleng;
-  printf("<ADD_OP,%s>\n", yytext);
+  // printf("<ADD_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return ADD_OP;
 }
@@ -204,7 +204,7 @@ ML_COMMENT_END  "*/"
 
 {EXISTS_OP} {
   column += yyleng;
-  printf("<EXISTS_OP,%s>\n", yytext);
+  // printf("<EXISTS_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return EXISTS_OP;
 }
