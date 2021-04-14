@@ -22,7 +22,7 @@ int main(int a, set aba){
       varlis = poka * 3;
       for(h = j; h >= 50; h = h+1){
         poka = varlis - 10;
-        for(j==10;;j=j-1){
+        for(j=10; j > 3 ;j=j-1){
           varlis = varlis / 2;
           if(poka > 20) poka = poka - 5;
             else if(poka < 20) poka = poka - 2;

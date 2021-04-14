@@ -220,35 +220,35 @@ ML_COMMENT_END  "*/"
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '+';
+  return PLUS;
 }
 
 {MINUS} {
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '-';
+  return MINUS;
 }
 
 {MULT} {
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '*';
+  return MULT;
 }
 
 {DIV} {
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '/';
+  return DIV;
 }
 
 {NOT} {
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '!';
+  return NOT;
 }
 
 {OR} {
@@ -269,7 +269,7 @@ ML_COMMENT_END  "*/"
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '<';
+  return LT;
 }
 
 {LTE} {
@@ -283,7 +283,7 @@ ML_COMMENT_END  "*/"
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '>';
+  return GT;
 }
 
 {GTE} {
@@ -311,7 +311,7 @@ ML_COMMENT_END  "*/"
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '=';
+  return ASSIGN;
 }
 
 {LPAREN} {

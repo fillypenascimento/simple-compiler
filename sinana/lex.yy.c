@@ -1032,7 +1032,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '+';
+  return PLUS;
 }
 	YY_BREAK
 case 26:
@@ -1042,7 +1042,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '-';
+  return MINUS;
 }
 	YY_BREAK
 case 27:
@@ -1052,7 +1052,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '*';
+  return MULT;
 }
 	YY_BREAK
 case 28:
@@ -1062,7 +1062,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '/';
+  return DIV;
 }
 	YY_BREAK
 case 29:
@@ -1072,7 +1072,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '!';
+  return NOT;
 }
 	YY_BREAK
 case 30:
@@ -1102,7 +1102,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '<';
+  return LT;
 }
 	YY_BREAK
 case 33:
@@ -1122,7 +1122,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '>';
+  return GT;
 }
 	YY_BREAK
 case 35:
@@ -1162,7 +1162,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  return '=';
+  return ASSIGN;
 }
 	YY_BREAK
 case 39:

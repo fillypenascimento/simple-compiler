@@ -2,6 +2,7 @@ int main () {
     int a;
     int b;
     float de;
+    int a;
 
     de = 1.5;
 
