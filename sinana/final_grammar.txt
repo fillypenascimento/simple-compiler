@@ -53,5 +53,18 @@ ID        LETTER_ LETTER_* DIGIT*
 CHAR      ' DIGIT | LETTER '
 STRING    ' DIGIT* | LETTER_* '
 EMPTY     EMPTY
+IF        if
+ELSE      else
+FOR       for
+RETURN    return
+READ      read
+WRITE     write
+WRITELN   writeln
+IN_OP     in
+IS_SET_OP is_set
+ADD_OP    add
+REMOVE_OP remove
+EXISTS_OP exists
+FORALL_OP forall
 
-KEYWORDS: if else for return read write writeln in is_set add remove exists forall
+KEYWORDS: EMPTY if else for return read write writeln in is_set add remove exists forall

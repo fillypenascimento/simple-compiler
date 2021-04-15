@@ -20,6 +20,9 @@ float filhoda(int primeiro, int segundo) {
     beba = beba ++;
   };
 
+  aba -= 10;
+  aba || && beba;
+
   // if(!Beaba) {
   //   if(beba > 2) {
   //     aba = aba / 2;
