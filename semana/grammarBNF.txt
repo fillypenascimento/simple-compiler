@@ -1,0 +1,57 @@
+<program> ::= <declaration_list>
+<declaration_list> ::= <declaration_list> <declaration> | <declaration>
+<declaration> ::= <var_declaration> | <func_declaration>
+<var_declaration> ::= <variable> ";"
+<variable> ::= <type_specifier> <ID>
+<func_declaration> ::= <type_specifier> <ID> "(" <parameters> ")" <compound_stmt>
+<type_specifier> ::= "int" | "float" | "elem" | "set"
+<parameters> ::= <parameter_list>?
+<parameter_list> ::= <parameter_list> "," <parameter> | <parameter>
+<parameter> ::= <variable>
+<compound_stmt> ::= "{" <local_declarations> <statement_list> "}"
+<local_declarations> ::= (<local_declarations> <var_declaration>)?
+<statement_list> ::= (<statement_list> <statement>)?
+<statement> ::= <compound_stmt> | <conditional_stmt> | <iteration_stmt> | <expression_stmt> | <return_stmt>
+<conditional_stmt> ::= "if" "(" <expression> ")" <statement> | "if" "(" <expression> ")" <statement> "else " <statement>
+<iteration_stmt> ::= "for" "(" <expression_stmt> <expression_stmt> <expression> ")" <statement>
+<expression_stmt> ::= <expression> ";" | ";"
+<return_stmt> ::= "return" ";" | "return" <expression_stmt>
+<expression> ::= <ID> "=" <expression> | <simple_expression> | <set_expression> | <io_expression>
+<simple_expression> ::= <logop_una> <relational_exp> | <relational_exp> <logop_bin> <relational_exp> | <relational_exp>
+<relational_exp> ::= <arithm_add_exp> <relop> <arithm_add_exp> | <arithm_add_exp>
+<arithm_add_exp> ::= <arithm_add_exp> <ariop_add> <arithm_mul_exp> | <arithm_mul_exp>
+<arithm_mul_exp> ::= <arithm_mul_exp> <ariop_mul> <factor> | <factor>
+<factor> ::= "(" <expression> ")" | <func_call> | <ID> | <INT> | <FLOAT> | <EMPTY>
+<logop_una> ::= "!" 
+<logop_bin> ::= "&&" | "||"
+<relop> ::= "<" | "<=" | ">" | ">=" | "==" | "!="
+<ariop_add> ::= "+" | "-" 
+<ariop_mul> ::= "*" | "/"
+<set_expression> ::= <setop_in> | <setop_is_set> | <setop_add> | <setop_remove> | <setop_exists> | <setop_forall>
+<setop_in> ::= "(" <expression> "in" <expression> ")"
+<setop_is_set> ::= "is_set" "(" <ID> ")"
+<setop_add> ::= "add" <setop_in>
+<setop_remove> ::= "remove" <setop_in>
+<setop_exists> ::= "exists" "(" <ID> "in" <ID> ")"
+<setop_forall> ::= "forall" <setop_in> <statement>
+<io_expression> ::= <ioop_read> | <ioop_write>
+<ioop_read> ::= "read" "(" <ID> ")"
+<ioop_write> ::= "write" "(" <word> ")" | "writeln" "(" <word> ")"
+<word> ::= <CHAR> | <STRING>
+<func_call> ::= <ID> "(" <arguments> ")"
+<arguments> ::= <args_list>?
+<args_list> ::= <args_list> "," <expression> | <expression>
+
+<DIGIT> ::= [0-9]
+<INT> ::= <DIGIT>+
+<FLOAT> ::= <DIGIT>+ "." <DIGIT>+
+<LETTER_> ::= [a-z] | [A-Z] | "_"
+<ID> ::= <LETTER_> (<LETTER_> | <DIGIT>)*
+<CHAR> ::= "'" (<DIGIT> | <LETTER_>) "'"
+<STRING> ::= "'" (<DIGIT> | <LETTER_>)* "'"
+<EMPTY> ::= "EMPTY"
+
+
+KEYWORDS: if else for return read write writeln in is_set add remove exists forall
+SPECIAL SYMBOLS: + - * / ! || && < <= > >= == != = ( ) { } , ; /* */ //
+COMMENTS: /* ... */ // ...

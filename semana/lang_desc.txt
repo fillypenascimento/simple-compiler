@@ -1,0 +1,14 @@
+KEYWORDS
+tipos: int (final), float (final), elem (nonfinal), set(nonfinal)
+controle de fluxo: if, else, for, return
+constantes: 0-9, EMPTY
+I/O: read, write, writeln
+operações: in, is_set, add, remove, exists, forall
+
+OPERADORES
+aritméticas: +, -, *, /
+lógicas: !, ||, &&
+relacionais: <, <=, >, >=, ==, !=
+atribuição: =
+escopo: (, ), [, ], {, }, ;
+comentários: /*, */, //
