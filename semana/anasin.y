@@ -32,6 +32,7 @@
 %define lr.type canonical-lr
 
 %union value {
+  // char tt_name[51]; // tt_name: Terminal Token name      inicialização com tamanho estático para poder usar strcpy no léxico e não precisar lidar com free's eternos por causa do strdup
   char* tt_name; // tt_name: Terminal Token name
   struct tree_node* nt_node; // nt_node: Nonterminal Token node
 }
@@ -94,7 +95,7 @@
 %type <nt_node> var-declaration
 %type <nt_node> variable
 %type <nt_node> func-declaration
-%type <nt_node> type-specifier
+%type <tt_name> type-specifier
 // %type <nt_node> parameters
 %type <nt_node> parameter-list
 %type <nt_node> parameter
@@ -201,42 +202,46 @@ variable:
     { 
       // printf("variable  ->  type-specifier %s\n", $2);
       // NÃO PRECISA CRIAR NÓ NO TYPE-SPECIFIER, SÓ CHAMAR A TT_NAME DA UNION 
-      $$ = create_ast_node(VARIABLE, $1->type, $2, NULL, NULL);
-      insert_into_symbol_table($2, $1->type, "variable");
+      $$ = create_ast_node(VARIABLE, (char*) $1, $2, NULL, NULL);
+      insert_into_symbol_table($2, (char*) $1, "variable");
     }
 ;
 func-declaration:
   type-specifier ID '(' parameter-list ')' compound-stmt
     {
       // printf("func-declaration  ->  type-specifier %s ( parameters ) compount-stmt\n", $2);
-      $$ = create_ast_node(FUNC_DECLARATION, $1->type, $2, NULL, $4);
+      $$ = create_ast_node(FUNC_DECLARATION, $1, $2, NULL, $4);
       $4->next = $6;
-      insert_into_symbol_table($2, $1->type, "function");
+      insert_into_symbol_table($2, $1, "function");
     }
 ;
 type-specifier:
   TYPEINT
     {
       // printf("type-specifier  ->  %s\n", $1);
-      $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+      // $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+      $$ = $1;
     }
   |
   TYPEFLOAT
     {
       // printf("type-specifier  ->  %s\n", $1);
-      $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+      // $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+      $$ = $1;
     }
   |
   TYPEELEM
     {
       // printf("type-specifier  ->  %s\n", $1);
-      $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+      // $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+      $$ = $1;
     }
   |
   TYPESET
     {
       // printf("type-specifier  ->  %s\n", $1);
-      $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+      // $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
+      $$ = $1;
     }
 ;
 // parameters:
@@ -710,6 +715,7 @@ logop-una:
     {
       // printf("logop-una  ->  !\n");
       $$ = create_ast_node(LOGOP_UNA, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
 ;
 logop-bin:
@@ -717,12 +723,14 @@ logop-bin:
     {
       // printf("logop-bin  ->  &&\n");
       $$ = create_ast_node(LOGOP_BIN, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   OR
     {
       // printf("logop-bin  ->  ||\n");
       $$ = create_ast_node(LOGOP_BIN, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
 ;
 relop:
@@ -730,36 +738,42 @@ relop:
     {
       // printf("relop  ->  <\n");
       $$ = create_ast_node(RELOP, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   LTE
     {
       // printf("relop  ->  <=\n");
       $$ = create_ast_node(RELOP, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   GT
     {
       // printf("relop  ->  >\n");
       $$ = create_ast_node(RELOP, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   GTE
     {
       // printf("relop  ->  >=\n");
       $$ = create_ast_node(RELOP, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   EQ
     {
       // printf("relop  ->  ==\n");
       $$ = create_ast_node(RELOP, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   NEQ
     {
       // printf("relop  ->  !=\n");
       $$ = create_ast_node(RELOP, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
 ;
 ariop-add:
@@ -767,12 +781,14 @@ ariop-add:
     {
       // printf("ariop-add  ->  +\n");
       $$ = create_ast_node(ARIOP_ADD, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   MINUS 
     {
       // printf("ariop-add  ->  -\n");
       $$ = create_ast_node(ARIOP_ADD, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
 ;
 ariop-mul:
@@ -780,12 +796,14 @@ ariop-mul:
     {
       // printf("ariop-mul  ->  *\n");
       $$ = create_ast_node(ARIOP_MUL, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   DIV
     {
       // printf("ariop-mul  ->  /\n");
       $$ = create_ast_node(ARIOP_MUL, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
 ;
 set-expression:
@@ -929,12 +947,14 @@ word:
     {
       // printf("word  ->  %s\n", $1);
       $$ = create_ast_node(CHAR_T, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
   |
   STRING
     {
       // printf("word  ->  %s\n", $1);
       $$ = create_ast_node(STRING_T, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
 ;
 func-call:
@@ -977,6 +997,7 @@ var:
     {
       // printf("var  ->  %s\n", $1);
       $$ = create_ast_node(VAR, NULL, $1, NULL, NULL);
+      // $$ = $1;
     }
 ;
 
@@ -993,7 +1014,6 @@ int main(int argc, char *argv[]){
 
   yyparse();
   fclose(yyin);
-  yylex_destroy();
 
   //  if(error_count > 0){
   //    printf("\nThe lexical analisys finished with %d errors found.\n", error_count);
@@ -1005,6 +1025,8 @@ int main(int argc, char *argv[]){
 
   free_ast(abstract_tree);
   free_symbol_table();
+  
+  yylex_destroy();
 
   return 0;
 }

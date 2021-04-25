@@ -114,10 +114,11 @@ union value
 {
 #line 34 "anasin.y"
 
+  // char tt_name[51]; // tt_name: Terminal Token name      inicialização com tamanho estático para poder usar strcpy no léxico e não precisar lidar com free's eternos por causa do strdup
   char* tt_name; // tt_name: Terminal Token name
   struct tree_node* nt_node; // nt_node: Nonterminal Token node
 
-#line 121 "anasin.tab.h"
+#line 122 "anasin.tab.h"
 
 };
 #line 34 "anasin.y"

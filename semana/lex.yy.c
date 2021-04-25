@@ -532,7 +532,7 @@ char *yytext;
 #include "anasin.tab.h"
 
 extern char* yytext;
-extern int yylex();
+// extern int yylex();
 int line = 1, column = 1, error_count = 0;
 #line 538 "lex.yy.c"
 

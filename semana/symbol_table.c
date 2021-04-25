@@ -34,7 +34,7 @@ void insert_into_symbol_table(char* symbol_name, char* symbol_type, char* entry_
 
 char* build_hash_key(char* symbol_name, char* symbol_type, char* entry_type) {
   // https://stackoverflow.com/questions/8257714/how-to-convert-an-int-to-string-in-c
-  char* scope = malloc(sizeof(char)); // CORRIGIR ALOCAÇÃO QUANDO ESTIVER LIDANDO COM ESCOPO
+  char* scope = malloc(2*sizeof(char)); // CORRIGIR ALOCAÇÃO QUANDO ESTIVER LIDANDO COM ESCOPO
   sprintf(scope, "%d", current_scope);
   // https://stackoverflow.com/questions/8465006/how-do-i-concatenate-two-strings-in-c
   int key_size = strlen(scope) + strlen(entry_type) + strlen(symbol_type) + strlen(symbol_name) + 6;
@@ -49,6 +49,8 @@ char* build_hash_key(char* symbol_name, char* symbol_type, char* entry_type) {
   strcat(new_key, symbol_type);
   strcat(new_key, ".");
   strcat(new_key, symbol_name);
+
+  free(scope);
 
   return new_key;
 }
@@ -74,6 +76,7 @@ void free_symbol_table(){
 
   HASH_ITER(hh, symbol_table, entry, aux_entry) {
     HASH_DEL(symbol_table, entry);
+    free(entry->hash_key);
     free(entry);
   }
 }

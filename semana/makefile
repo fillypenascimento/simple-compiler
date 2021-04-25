@@ -16,4 +16,4 @@ cmodules:
 valgrind:
 	valgrind -v --tool=memcheck --leak-check=full \
 	--show-leak-kinds=all --track-origins=yes --log-file="logfile.out" \
-	./parser examples/correct/c1.c
+	./parser examples/prof1.c
