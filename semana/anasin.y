@@ -95,7 +95,7 @@
 %type <nt_node> variable
 %type <nt_node> func-declaration
 %type <nt_node> type-specifier
-%type <nt_node> parameters
+// %type <nt_node> parameters
 %type <nt_node> parameter-list
 %type <nt_node> parameter
 %type <nt_node> compound-stmt
@@ -200,12 +200,13 @@ variable:
   type-specifier ID
     { 
       // printf("variable  ->  type-specifier %s\n", $2);
-      $$ = create_ast_node(VAR_DECLARATION, $1->type, $2, NULL, NULL);
+      // NÃO PRECISA CRIAR NÓ NO TYPE-SPECIFIER, SÓ CHAMAR A TT_NAME DA UNION 
+      $$ = create_ast_node(VARIABLE, $1->type, $2, NULL, NULL);
       insert_into_symbol_table($2, $1->type, "variable");
     }
 ;
 func-declaration:
-  type-specifier ID '(' parameters ')' compound-stmt
+  type-specifier ID '(' parameter-list ')' compound-stmt
     {
       // printf("func-declaration  ->  type-specifier %s ( parameters ) compount-stmt\n", $2);
       $$ = create_ast_node(FUNC_DECLARATION, $1->type, $2, NULL, $4);
@@ -238,19 +239,13 @@ type-specifier:
       $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
     }
 ;
-parameters:
-  parameter-list
-    {
-      // printf("parameters  ->  parameter-list\n");
-      $$ = $1;
-    }
-  // |
-  // %empty
-  //   {
-  // //     printf("parameters  ->\n");
-  //     $$ = NULL;
-  //   }
-;
+// parameters:
+//   parameter-list
+//     {
+//       // printf("parameters  ->  parameter-list\n");
+//       $$ = $1;
+//     }
+// ;
 parameter-list:
   parameter-list ',' parameter
     {
@@ -262,8 +257,14 @@ parameter-list:
   parameter
     {
       // printf("parameter-list  ->  parameter\n");
-      // $$ = create_ast_node(PARAMETER, NULL, NULL, NULL, $1);
-      $$ = $1;
+      $$ = create_ast_node(PARAMETER_LIST, NULL, NULL, NULL, $1);
+      // $$ = $1;
+    }
+  |
+  %empty
+    {
+      // $$ = NULL;
+      $$ = create_ast_node(EMPTY_PARAMETER_LIST, NULL, NULL, NULL, NULL);
     }
   |
   error 
@@ -277,11 +278,6 @@ parameter:
     {
       // printf("parameter  ->  variable\n");
       $$ = $1;
-    }
-  |
-  %empty
-    {
-      $$ = NULL;
     }
 ;
 compound-stmt:
@@ -301,6 +297,7 @@ local-declarations:
   statement-list
     {
       // printf("local-declarations  ->  statement-list\n");
+      // $$ = create_ast_node(COMPOUND_STMT, NULL, NULL, NULL, $3);
       $$ = $1;
     }
   |
@@ -409,14 +406,14 @@ conditional-stmt:
   IF '(' expression ')' statement %prec IFX
     {
       // printf("conditional-stmt  ->  if ( expression ) statement \n");
-      $$ = create_ast_node(CONDITIONAL_STMT, NULL, NULL, NULL, $3);
+      $$ = create_ast_node(CONDITIONAL_IF_STMT, NULL, NULL, NULL, $3);
       $3->next = $5;
     }
   |
   IF '(' expression ')' statement ELSE statement
     {
       // printf("conditional-stmt  ->  if ( expression ) statement else statement\n");
-      $$ = create_ast_node(CONDITIONAL_STMT, NULL, NULL, NULL, $3);
+      $$ = create_ast_node(CONDITIONAL_IF_ELSE_STMT, NULL, NULL, NULL, $3);
       $3->next = $5;
       $5->next = $7;
     }
@@ -424,14 +421,14 @@ conditional-stmt:
   IF setop-in statement %prec IFX
     {
       // printf("conditional-stmt  ->  if ( expression ) statement \n");
-      $$ = create_ast_node(CONDITIONAL_STMT, NULL, NULL, NULL, $2);
+      $$ = create_ast_node(CONDITIONAL_IF_STMT, NULL, NULL, NULL, $2);
       $2->next = $3;
     }
   |
   IF setop-in statement ELSE statement
     {
       // printf("conditional-stmt  ->  if ( expression ) statement else statement\n");
-      $$ = create_ast_node(CONDITIONAL_STMT, NULL, NULL, NULL, $2);
+      $$ = create_ast_node(CONDITIONAL_IF_ELSE_STMT, NULL, NULL, NULL, $2);
       $2->next = $3;
       $3->next = $5;
     }
@@ -611,9 +608,9 @@ relational-exp:
   relational-exp relop arithm-add-exp
     {
       // printf("relational-exp  ->  arithm-add-exp relop arithm-add-exp\n");
-      $$ = create_ast_node(RELATIONAL_EXP, NULL, NULL, NULL, $1);
-      $1->next = $2;
-      $2->next = $3;
+      $$ = create_ast_node(RELATIONAL_EXP, NULL, $2->value, NULL, $1);
+      $1->next = $3;
+      // $2->next = $3;
     }
   |
   arithm-add-exp
@@ -626,9 +623,9 @@ arithm-add-exp:
   arithm-add-exp ariop-add arithm-mul-exp
     {
       // printf("arithm-add-exp  ->  arithm-add-exp ariop-add arithm-mul-exp\n");
-      $$ = create_ast_node(ARITHM_ADD_EXP, NULL, NULL, NULL, $1);
-      $1->next = $2;
-      $2->next = $3;
+      $$ = create_ast_node(ARITHM_ADD_EXP, NULL, $2->value, NULL, $1);
+      $1->next = $3;
+      // $2->next = $3;
     }
   |
   arithm-mul-exp
@@ -641,9 +638,9 @@ arithm-mul-exp:
   arithm-mul-exp ariop-mul unary-minus-exp
     {
       // printf("arithm-mul-exp  ->  arithm-mul-exp ariop-mul unary-minus-exp\n");
-      $$ = create_ast_node(ARITHM_MUL_EXP, NULL, NULL, NULL, $1);
-      $1->next = $2;
-      $2->next = $3;
+      $$ = create_ast_node(ARITHM_MUL_EXP, NULL, $2->value, NULL, $1);
+      $1->next = $3;
+      // $2->next = $3;
     }
     |
   unary-minus-exp
@@ -656,7 +653,7 @@ unary-minus-exp:
   MINUS factor %prec NEG
     {
       // printf("unary-minus-exp  ->  '-' factor\n");
-      $$ = $2; //CORRIGIR NUMERO NEGATIVO
+      // $$ = $2; //CORRIGIR NUMERO NEGATIVO
       $$ = create_ast_node(UNARY_MINUS_EXP, NULL, $1, NULL, $2);
     }
   |
@@ -918,13 +915,13 @@ ioop-write:
   WRITE '(' word ')'
     {
       // printf("ioop-write  ->  write ( word ) \n");
-      $$ = create_ast_node(WRITE, NULL, $1, NULL, $3);
+      $$ = create_ast_node(WRITE_T, NULL, $1, NULL, $3);
     }
   |
   WRITELN '(' word ')'
     {
       // printf("ioop-write  ->  writeln ( word ) \n");
-      $$ = create_ast_node(WRITELN, NULL, $1, NULL, $3);
+      $$ = create_ast_node(WRITELN_T, NULL, $1, NULL, $3);
     }
 ;
 word:
@@ -971,7 +968,8 @@ args-list:
   expression
     {
       // printf("args-list  ->  expression\n");
-      $$ = $1;
+      $$ = create_ast_node(ARGS_LIST, NULL, NULL, NULL, $1);
+      // $$ = $1;
     }
 ;
 var:
@@ -1001,7 +999,7 @@ int main(int argc, char *argv[]){
   //    printf("\nThe lexical analisys finished with %d errors found.\n", error_count);
   //  }
 
-  printf("\n\n\n________________| ABSTRACT TREE |________________\n\n");
+  printf("\n\n\n________________| ABSTRACT SYNTAX TREE |________________\n\n");
   print_tree(abstract_tree, 0);
   print_symbol_table();
 

@@ -920,7 +920,7 @@ YY_RULE_SETUP
 #line 142 "analex.l"
 {
   column += yyleng;
-  printf("<FOR>\n");
+  // printf("<FOR>\n");
   yylval.tt_name = (char*) strdup(yytext);
   return FOR;
 }
@@ -940,7 +940,7 @@ YY_RULE_SETUP
 #line 156 "analex.l"
 {
   column += yyleng;
-  printf("<READ>\n");
+  // printf("<READ>\n");
   yylval.tt_name = (char*) strdup(yytext);
   return READ;
 }
@@ -950,7 +950,7 @@ YY_RULE_SETUP
 #line 163 "analex.l"
 {
   column += yyleng;
-  printf("<WRITE>\n");
+  // printf("<WRITE>\n");
   yylval.tt_name = (char*) strdup(yytext);
   return WRITE;
 }
@@ -960,7 +960,7 @@ YY_RULE_SETUP
 #line 170 "analex.l"
 {
   column += yyleng;
-  printf("<WRITELN>\n");
+  // printf("<WRITELN>\n");
   yylval.tt_name = (char*) strdup(yytext);
   return WRITELN;
 }
@@ -980,7 +980,7 @@ YY_RULE_SETUP
 #line 184 "analex.l"
 {
   column += yyleng;
-  printf("<IS_SET_OP,%s>\n", yytext);
+  // printf("<IS_SET_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return IS_SET_OP;
 }
@@ -1000,7 +1000,7 @@ YY_RULE_SETUP
 #line 198 "analex.l"
 {
   column += yyleng;
-  printf("<REMOVE_OP,%s>\n", yytext);
+  // printf("<REMOVE_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return REMOVE_OP;
 }
@@ -1020,7 +1020,7 @@ YY_RULE_SETUP
 #line 212 "analex.l"
 {
   column += yyleng;
-  printf("<FORALL_OP,%s>\n", yytext);
+  // printf("<FORALL_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return FORALL_OP;
 }
@@ -1192,7 +1192,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  printf("<%s>\n", yytext);
+  // printf("<%s>\n", yytext);
 }
 	YY_BREAK
 case 42:
@@ -1202,7 +1202,7 @@ YY_RULE_SETUP
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  printf("<%s>\n", yytext);
+  // printf("<%s>\n", yytext);
 }
 	YY_BREAK
 case 43:

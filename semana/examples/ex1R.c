@@ -1,6 +1,6 @@
 int algum_id;
-float algum_outro_tipo;
-elem hahahahaha;
+float outro_id;
+elem hahaha;
 
 float filhoda(int primeiro, int segundo) {
   int aba;

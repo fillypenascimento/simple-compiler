@@ -141,7 +141,7 @@ ML_COMMENT_END  "*/"
 
 {FOR} {
   column += yyleng;
-  printf("<FOR>\n");
+  // printf("<FOR>\n");
   yylval.tt_name = (char*) strdup(yytext);
   return FOR;
 }
@@ -155,21 +155,21 @@ ML_COMMENT_END  "*/"
 
 {READ} {
   column += yyleng;
-  printf("<READ>\n");
+  // printf("<READ>\n");
   yylval.tt_name = (char*) strdup(yytext);
   return READ;
 }
 
 {WRITE} {
   column += yyleng;
-  printf("<WRITE>\n");
+  // printf("<WRITE>\n");
   yylval.tt_name = (char*) strdup(yytext);
   return WRITE;
 }
 
 {WRITELN} {
   column += yyleng;
-  printf("<WRITELN>\n");
+  // printf("<WRITELN>\n");
   yylval.tt_name = (char*) strdup(yytext);
   return WRITELN;
 }
@@ -183,7 +183,7 @@ ML_COMMENT_END  "*/"
 
 {IS_SET_OP} {
   column += yyleng;
-  printf("<IS_SET_OP,%s>\n", yytext);
+  // printf("<IS_SET_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return IS_SET_OP;
 }
@@ -197,7 +197,7 @@ ML_COMMENT_END  "*/"
 
 {REMOVE_OP} {
   column += yyleng;
-  printf("<REMOVE_OP,%s>\n", yytext);
+  // printf("<REMOVE_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return REMOVE_OP;
 }
@@ -211,7 +211,7 @@ ML_COMMENT_END  "*/"
 
 {FORALL_OP} {
   column += yyleng;
-  printf("<FORALL_OP,%s>\n", yytext);
+  // printf("<FORALL_OP,%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
   return FORALL_OP;
 }
@@ -332,14 +332,14 @@ ML_COMMENT_END  "*/"
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  printf("<%s>\n", yytext);
+  // printf("<%s>\n", yytext);
 }
 
 {RBRACK} {
   column += yyleng;
   // printf("<%s>\n", yytext);
   yylval.tt_name = (char*) strdup(yytext);
-  printf("<%s>\n", yytext);
+  // printf("<%s>\n", yytext);
 }
 
 {LBRACE} {

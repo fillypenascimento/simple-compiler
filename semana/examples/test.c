@@ -44,4 +44,5 @@ set tryTest(set testableSet) {
   remove(9 in testableSet);
   writeln('K');
   tryTest(testableSet);
+  tryTest(testableSet, testableSet);
 }

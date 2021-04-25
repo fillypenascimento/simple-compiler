@@ -43,6 +43,9 @@ void print_node_type(int node_type) {
     case PARAMETER_LIST:
       printf("PARAMETER_LIST");
       break;
+    case EMPTY_PARAMETER_LIST:
+      printf("EMPTY_PARAMETER_LIST");
+      break;
     case PARAMETER:
       printf("PARAMETER");
       break;
@@ -61,8 +64,11 @@ void print_node_type(int node_type) {
     case FORALL_STATEMENT:
       printf("FORALL_STATEMENT");
       break;
-    case CONDITIONAL_STMT:
-      printf("CONDITIONAL_STMT");
+    case CONDITIONAL_IF_STMT:
+      printf("CONDITIONAL_IF_STMT");
+      break;
+    case CONDITIONAL_IF_ELSE_STMT:
+      printf("CONDITIONAL_IF_ELSE_STMT");
       break;
     case ITERATION_STMT:
       printf("ITERATION_STMT");
@@ -296,32 +302,56 @@ void print_node_type(int node_type) {
       printf("SEMICOLON_T");
       break;
     }
-  printf(" | ");
+  printf(":");
 }
 
 void print_ast_ident(int depth) {
   for(int i = depth; i != 0; i--){
-    printf(" | ");
+    printf("|  ");
   }
 }
 
 void print_tree(tree_node* tree, int start_depth) {
   if (tree) {
-    print_ast_ident(start_depth);
-    print_node_type(tree->rule);
+    int should_print_node = printable_rule(tree);
 
-    if (tree->type != NULL){
-      printf("node_type: %s | ", tree->type);
+    if(should_print_node){
+      print_ast_ident(start_depth);
+      print_node_type(tree->rule);
+
+      if (tree->type != NULL){
+        printf(" %s ", tree->type);
+      }
+
+      if (tree->value != NULL){
+        printf(" %s", tree->value);
+      }
+
+      printf("\n");
     }
 
-    if (tree->value != NULL){
-      printf("node_value: %s | ", tree->value);
+    // print_tree(tree->next, start_depth);
+    if(should_print_node) {
+      print_tree(tree->child, start_depth + 1);
+      print_tree(tree->next, start_depth);
+    } else {
+      print_tree(tree->next, start_depth);
+      print_tree(tree->child, start_depth);
     }
-
-    printf("\n");
-    print_tree(tree->next, start_depth);
-    print_tree(tree->child, start_depth + 1);
   }
+}
+
+int printable_rule(tree_node* node) {
+  if((node->rule == DECLARATION_LIST) ||
+    (node->rule == STATEMENT_LIST) ||
+    // (node->rule == PARAMETER_LIST) ||
+    (node->rule == EMPTY_PARAMETER_LIST)
+    // (node->rule == ARGS_LIST))
+  ){
+    return 0;
+  }
+
+  return 1;
 }
 
 void free_ast(tree_node* node){

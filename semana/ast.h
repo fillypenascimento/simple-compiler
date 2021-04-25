@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
   
   
 /* SYNTATIC TREE DECLARATIONS */
@@ -15,13 +16,15 @@ enum rules {
   TYPE_SPECIFIER,
   PARAMETERS,
   PARAMETER_LIST,
+  EMPTY_PARAMETER_LIST,
   PARAMETER,
   COMPOUND_STMT,
   LOCAL_DECLARATIONS,
   STATEMENT_LIST,
   STATEMENT,
   FORALL_STATEMENT,
-  CONDITIONAL_STMT,
+  CONDITIONAL_IF_STMT,
+  CONDITIONAL_IF_ELSE_STMT,
   ITERATION_STMT,
   FORALL_STMT,
   EXPRESSION_STMT,
@@ -115,5 +118,6 @@ typedef struct tree_node {
 tree_node* create_ast_node(rules_types rule, char* type, char* value, struct tree_node* next, struct tree_node* child);
 void print_tree(tree_node* tree, int start_depth);
 void print_node_type(int node_type);
+int printable_rule(tree_node* node);
 void print_ast_ident(int depth);
 void free_ast(tree_node* node);
