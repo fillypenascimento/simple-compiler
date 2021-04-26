@@ -10,7 +10,7 @@
   #include "uthash.h"
   #include "symbol_table.h"
   #include "ast.h"
-  #include "scope.h"
+  // #include "scope.h"
 
   extern int yylex();
   extern int yylex_destroy();
@@ -44,6 +44,7 @@
   int whitin_parameters = 0;
   int whitin_function = 0;
   semantic_validations* semantics = NULL;
+  int semantic_errors = 0;
 
 %}
 
@@ -231,36 +232,26 @@ func-declaration:
   type-specifier ID '('
     {
       whitin_parameters = 1;
-      whitin_function = 1;
-      printf("1: %d\n", global_scope_counter);
       global_scope_counter++;
       aux_scope = current_scope_seq;
       current_scope_seq = global_scope_counter;
-      printf("2: %d\n", global_scope_counter);
-      // current_scope_seq = global_scope_counter;
-      // current_scope = create_scope(current_scope, global_scope_counter);
     }
   parameter-list ')'
     {
       whitin_parameters = 0;
       global_scope_counter--;
       current_scope_seq = aux_scope;
-      // current_scope_seq--;
-      // current_scope = current_scope->father;
     }
   compound-stmt
     {
       // printf("func-declaration  ->  type-specifier %s ( parameters ) compount-stmt\n", $2);
       $$ = create_ast_node(FUNC_DECLARATION, $1, $2, NULL, $5);
       $5->next = $8;
-      // current_scope_seq--;
       aux_scope = current_scope_seq;
       current_scope_seq = current_scope->scope_seq;
       insert_into_symbol_table($2, $1, "function");
       current_scope_seq = aux_scope;
       perform_main_validation($2);
-      // printf("wfunction: %d\n", whitin_function);
-      whitin_function = 0;
     }
 ;
 type-specifier:
@@ -336,37 +327,17 @@ parameter:
 compound-stmt:
   '{' 
     {
-      // if(!whitin_function){
-        printf("3: %d\n", global_scope_counter);
-        
-        // if(whitin_function) {
-        //   global_scope_counter++;
-        //   aux_scope = current_scope_seq;
-        //   current_scope_seq = global_scope_counter;
-        // }
-        
-        global_scope_counter++;
-        aux_scope = current_scope_seq;
-        current_scope_seq = global_scope_counter;
-        printf("4: %d\n", global_scope_counter);
-      // }
-      // current_scope_seq++;
+      global_scope_counter++;
+      aux_scope = current_scope_seq;
+      current_scope_seq = global_scope_counter;
       current_scope = create_scope(current_scope, global_scope_counter);
     }
   local-declarations '}'
     {
       // printf("compound-stmt  ->  { local-declarations }\n");
       $$ = create_ast_node(COMPOUND_STMT, NULL, NULL, NULL, $3);
-      // $$ = $3;
-      printf("5: %d\n", global_scope_counter);
-      // global_scope_counter--;
-      // current_scope_seq--;
       current_scope_seq = aux_scope;
-      printf("6: %d\n", global_scope_counter);
-      // current_scope_seq--;
       current_scope = current_scope->father;
-      whitin_function = 0;
-      printf("wfunction: %d\n", whitin_function);
     }
 ;
 local-declarations:
@@ -1095,9 +1066,13 @@ int main(int argc, char *argv[]){
 
   run_semantic_validation();
 
-  printf("\n\n\n________________| ABSTRACT SYNTAX TREE |________________\n\n");
-  print_tree(abstract_tree, 0);
+  if(semantic_errors != 1){
+    printf("\n\n\n________________| ABSTRACT SYNTAX TREE |________________\n\n");
+    print_tree(abstract_tree, 0);
+  }
   print_symbol_table();
+
+  printf("\n\n\n________________| SCOPE TREE |________________\n\n");
   print_scope(global_scope, 0);
 
   free_ast(abstract_tree);
@@ -1121,7 +1096,10 @@ void initialize_semantic_validations() {
 }
 
 void run_semantic_validation() {
-  if(semantics->main_issue == 1) printf("-> SEMANTIC_VALIDATION_ERROR: no function 'main' declared.");
+  if(semantics->main_issue == 1){
+    printf("-> SEMANTIC_VALIDATION_ERROR|SE001|: no function 'main' declared.");
+    semantic_errors = 1;
+  }
 }
 
 void perform_main_validation(char* func_name) {

@@ -76,7 +76,7 @@
   #include "uthash.h"
   #include "symbol_table.h"
   #include "ast.h"
-  #include "scope.h"
+  // #include "scope.h"
 
   extern int yylex();
   extern int yylex_destroy();
@@ -110,9 +110,10 @@
   int whitin_parameters = 0;
   int whitin_function = 0;
   semantic_validations* semantics = NULL;
+  int semantic_errors = 0;
 
 
-#line 116 "anasin.tab.c"
+#line 117 "anasin.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -622,18 +623,18 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   176,   176,   187,   194,   201,   207,   214,   221,   232,
-     244,   231,   267,   274,   281,   288,   303,   310,   317,   323,
-     330,   338,   337,   373,   380,   387,   394,   401,   407,   413,
-     419,   425,   431,   437,   443,   450,   456,   462,   468,   474,
-     482,   489,   497,   504,   513,   524,   533,   539,   546,   552,
-     568,   575,   581,   587,   594,   601,   608,   616,   625,   633,
-     641,   650,   659,   668,   677,   684,   692,   699,   707,   714,
-     722,   729,   736,   743,   749,   760,   766,   772,   778,   785,
-     793,   800,   808,   815,   822,   829,   836,   843,   851,   858,
-     866,   873,   881,   887,   893,   899,   905,   912,   929,   936,
-     943,   967,   975,   981,   997,  1004,  1010,  1017,  1024,  1032,
-    1039,  1045,  1052,  1059,  1067
+       0,   177,   177,   188,   195,   202,   208,   215,   222,   233,
+     240,   232,   258,   265,   272,   279,   294,   301,   308,   314,
+     321,   329,   328,   344,   351,   358,   365,   372,   378,   384,
+     390,   396,   402,   408,   414,   421,   427,   433,   439,   445,
+     453,   460,   468,   475,   484,   495,   504,   510,   517,   523,
+     539,   546,   552,   558,   565,   572,   579,   587,   596,   604,
+     612,   621,   630,   639,   648,   655,   663,   670,   678,   685,
+     693,   700,   707,   714,   720,   731,   737,   743,   749,   756,
+     764,   771,   779,   786,   793,   800,   807,   814,   822,   829,
+     837,   844,   852,   858,   864,   870,   876,   883,   900,   907,
+     914,   938,   946,   952,   968,   975,   981,   988,   995,  1003,
+    1010,  1016,  1023,  1030,  1038
 };
 #endif
 
@@ -3551,7 +3552,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: declaration-list  */
-#line 177 "anasin.y"
+#line 178 "anasin.y"
     {
       // printf("program\n");
       // abstract_tree = $1;
@@ -3559,57 +3560,57 @@ yyreduce:
       (yyval.nt_node) = create_ast_node(PROGRAM, NULL, NULL, NULL, (yyvsp[0].nt_node));
       abstract_tree = (yyval.nt_node);
     }
-#line 3563 "anasin.tab.c"
+#line 3564 "anasin.tab.c"
     break;
 
   case 3: /* declaration-list: declaration-list declaration  */
-#line 188 "anasin.y"
+#line 189 "anasin.y"
     {
       // printf("declaration-list  ->  declaration-list declaration\n");
       (yyval.nt_node) = create_ast_node(DECLARATION_LIST, NULL, NULL, NULL, (yyvsp[-1].nt_node));
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 3573 "anasin.tab.c"
+#line 3574 "anasin.tab.c"
     break;
 
   case 4: /* declaration-list: declaration  */
-#line 195 "anasin.y"
+#line 196 "anasin.y"
     {
       // printf("declaration-list  ->  declaration\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3582 "anasin.tab.c"
+#line 3583 "anasin.tab.c"
     break;
 
   case 5: /* declaration: var-declaration  */
-#line 202 "anasin.y"
+#line 203 "anasin.y"
     {
       // printf("declaration  ->  var-declaration\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3591 "anasin.tab.c"
+#line 3592 "anasin.tab.c"
     break;
 
   case 6: /* declaration: func-declaration  */
-#line 208 "anasin.y"
+#line 209 "anasin.y"
     {
       // printf("declaration  ->  func-declaration\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3600 "anasin.tab.c"
+#line 3601 "anasin.tab.c"
     break;
 
   case 7: /* var-declaration: variable ';'  */
-#line 215 "anasin.y"
+#line 216 "anasin.y"
     {
       // printf("var declaration  ->  variable ;\n");
       (yyval.nt_node) = (yyvsp[-1].nt_node);
     }
-#line 3609 "anasin.tab.c"
+#line 3610 "anasin.tab.c"
     break;
 
   case 8: /* variable: type-specifier ID  */
-#line 222 "anasin.y"
+#line 223 "anasin.y"
     { 
       // printf("variable  ->  type-specifier %s\n", $2);
       // NÃO PRECISA CRIAR NÓ NO TYPE-SPECIFIER, SÓ CHAMAR A TT_NAME DA UNION 
@@ -3617,383 +3618,353 @@ yyreduce:
       if(whitin_parameters) insert_into_symbol_table((yyvsp[0].tt_name), (char*) (yyvsp[-1].tt_name), "parameter");
       else insert_into_symbol_table((yyvsp[0].tt_name), (char*) (yyvsp[-1].tt_name), "variable");
     }
-#line 3621 "anasin.tab.c"
+#line 3622 "anasin.tab.c"
     break;
 
   case 9: /* $@1: %empty  */
-#line 232 "anasin.y"
+#line 233 "anasin.y"
     {
       whitin_parameters = 1;
-      whitin_function = 1;
-      printf("1: %d\n", global_scope_counter);
       global_scope_counter++;
       aux_scope = current_scope_seq;
       current_scope_seq = global_scope_counter;
-      printf("2: %d\n", global_scope_counter);
-      // current_scope_seq = global_scope_counter;
-      // current_scope = create_scope(current_scope, global_scope_counter);
     }
-#line 3637 "anasin.tab.c"
+#line 3633 "anasin.tab.c"
     break;
 
   case 10: /* $@2: %empty  */
-#line 244 "anasin.y"
+#line 240 "anasin.y"
     {
       whitin_parameters = 0;
       global_scope_counter--;
       current_scope_seq = aux_scope;
-      // current_scope_seq--;
-      // current_scope = current_scope->father;
     }
-#line 3649 "anasin.tab.c"
+#line 3643 "anasin.tab.c"
     break;
 
   case 11: /* func-declaration: type-specifier ID '(' $@1 parameter-list ')' $@2 compound-stmt  */
-#line 252 "anasin.y"
+#line 246 "anasin.y"
     {
       // printf("func-declaration  ->  type-specifier %s ( parameters ) compount-stmt\n", $2);
       (yyval.nt_node) = create_ast_node(FUNC_DECLARATION, (yyvsp[-7].tt_name), (yyvsp[-6].tt_name), NULL, (yyvsp[-3].nt_node));
       (yyvsp[-3].nt_node)->next = (yyvsp[0].nt_node);
-      // current_scope_seq--;
       aux_scope = current_scope_seq;
       current_scope_seq = current_scope->scope_seq;
       insert_into_symbol_table((yyvsp[-6].tt_name), (yyvsp[-7].tt_name), "function");
       current_scope_seq = aux_scope;
       perform_main_validation((yyvsp[-6].tt_name));
-      // printf("wfunction: %d\n", whitin_function);
-      whitin_function = 0;
     }
-#line 3667 "anasin.tab.c"
+#line 3658 "anasin.tab.c"
     break;
 
   case 12: /* type-specifier: TYPEINT  */
-#line 268 "anasin.y"
+#line 259 "anasin.y"
     {
       // printf("type-specifier  ->  %s\n", $1);
       // $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
       (yyval.tt_name) = (yyvsp[0].tt_name);
     }
-#line 3677 "anasin.tab.c"
+#line 3668 "anasin.tab.c"
     break;
 
   case 13: /* type-specifier: TYPEFLOAT  */
-#line 275 "anasin.y"
+#line 266 "anasin.y"
     {
       // printf("type-specifier  ->  %s\n", $1);
       // $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
       (yyval.tt_name) = (yyvsp[0].tt_name);
     }
-#line 3687 "anasin.tab.c"
+#line 3678 "anasin.tab.c"
     break;
 
   case 14: /* type-specifier: TYPEELEM  */
-#line 282 "anasin.y"
+#line 273 "anasin.y"
     {
       // printf("type-specifier  ->  %s\n", $1);
       // $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
       (yyval.tt_name) = (yyvsp[0].tt_name);
     }
-#line 3697 "anasin.tab.c"
+#line 3688 "anasin.tab.c"
     break;
 
   case 15: /* type-specifier: TYPESET  */
-#line 289 "anasin.y"
+#line 280 "anasin.y"
     {
       // printf("type-specifier  ->  %s\n", $1);
       // $$ = create_ast_node(TYPE_SPECIFIER, $1, NULL, NULL, NULL);
       (yyval.tt_name) = (yyvsp[0].tt_name);
     }
-#line 3707 "anasin.tab.c"
+#line 3698 "anasin.tab.c"
     break;
 
   case 16: /* parameter-list: parameter-list ',' parameter  */
-#line 304 "anasin.y"
+#line 295 "anasin.y"
     {
       // printf("parameter-list  ->  parameter-list , parameter\n");
       (yyval.nt_node) = create_ast_node(PARAMETER_LIST, NULL, NULL, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 3717 "anasin.tab.c"
+#line 3708 "anasin.tab.c"
     break;
 
   case 17: /* parameter-list: parameter  */
-#line 311 "anasin.y"
+#line 302 "anasin.y"
     {
       // printf("parameter-list  ->  parameter\n");
       (yyval.nt_node) = create_ast_node(PARAMETER_LIST, NULL, NULL, NULL, (yyvsp[0].nt_node));
       // $$ = $1;
     }
-#line 3727 "anasin.tab.c"
+#line 3718 "anasin.tab.c"
     break;
 
   case 18: /* parameter-list: %empty  */
-#line 318 "anasin.y"
+#line 309 "anasin.y"
     {
       // $$ = NULL;
       (yyval.nt_node) = create_ast_node(EMPTY_PARAMETER_LIST, NULL, NULL, NULL, NULL);
     }
-#line 3736 "anasin.tab.c"
+#line 3727 "anasin.tab.c"
     break;
 
   case 19: /* parameter-list: error  */
-#line 324 "anasin.y"
+#line 315 "anasin.y"
     {
       yyerrok;
       (yyval.nt_node) = NULL;
     }
-#line 3745 "anasin.tab.c"
+#line 3736 "anasin.tab.c"
     break;
 
   case 20: /* parameter: variable  */
-#line 331 "anasin.y"
+#line 322 "anasin.y"
     {
       // printf("parameter  ->  variable\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3754 "anasin.tab.c"
+#line 3745 "anasin.tab.c"
     break;
 
   case 21: /* $@3: %empty  */
-#line 338 "anasin.y"
+#line 329 "anasin.y"
     {
-      // if(!whitin_function){
-        printf("3: %d\n", global_scope_counter);
-        
-        // if(whitin_function) {
-        //   global_scope_counter++;
-        //   aux_scope = current_scope_seq;
-        //   current_scope_seq = global_scope_counter;
-        // }
-        
-        global_scope_counter++;
-        aux_scope = current_scope_seq;
-        current_scope_seq = global_scope_counter;
-        printf("4: %d\n", global_scope_counter);
-      // }
-      // current_scope_seq++;
+      global_scope_counter++;
+      aux_scope = current_scope_seq;
+      current_scope_seq = global_scope_counter;
       current_scope = create_scope(current_scope, global_scope_counter);
     }
-#line 3777 "anasin.tab.c"
+#line 3756 "anasin.tab.c"
     break;
 
   case 22: /* compound-stmt: '{' $@3 local-declarations '}'  */
-#line 357 "anasin.y"
+#line 336 "anasin.y"
     {
       // printf("compound-stmt  ->  { local-declarations }\n");
       (yyval.nt_node) = create_ast_node(COMPOUND_STMT, NULL, NULL, NULL, (yyvsp[-1].nt_node));
-      // $$ = $3;
-      printf("5: %d\n", global_scope_counter);
-      // global_scope_counter--;
-      // current_scope_seq--;
       current_scope_seq = aux_scope;
-      printf("6: %d\n", global_scope_counter);
-      // current_scope_seq--;
       current_scope = current_scope->father;
-      whitin_function = 0;
-      printf("wfunction: %d\n", whitin_function);
     }
-#line 3796 "anasin.tab.c"
+#line 3767 "anasin.tab.c"
     break;
 
   case 23: /* local-declarations: statement-list  */
-#line 374 "anasin.y"
+#line 345 "anasin.y"
     {
       // printf("local-declarations  ->  statement-list\n");
       // $$ = create_ast_node(COMPOUND_STMT, NULL, NULL, NULL, $3);
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3806 "anasin.tab.c"
+#line 3777 "anasin.tab.c"
     break;
 
   case 24: /* local-declarations: %empty  */
-#line 381 "anasin.y"
+#line 352 "anasin.y"
     {
       // printf("local-declarations  ->\n");
       (yyval.nt_node) = NULL;
     }
-#line 3815 "anasin.tab.c"
+#line 3786 "anasin.tab.c"
     break;
 
   case 25: /* statement-list: statement-list statement  */
-#line 388 "anasin.y"
+#line 359 "anasin.y"
     {
       // printf("statement-list  ->  statement-list statement\n");
       (yyval.nt_node) = create_ast_node(STATEMENT_LIST, NULL, NULL, NULL, (yyvsp[-1].nt_node));
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 3825 "anasin.tab.c"
+#line 3796 "anasin.tab.c"
     break;
 
   case 26: /* statement-list: statement  */
-#line 395 "anasin.y"
+#line 366 "anasin.y"
     {
       // printf("statement-list  ->  statement\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3834 "anasin.tab.c"
+#line 3805 "anasin.tab.c"
     break;
 
   case 27: /* statement: compound-stmt  */
-#line 402 "anasin.y"
+#line 373 "anasin.y"
     {
       // printf("statement  ->  compound-stmt \n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3843 "anasin.tab.c"
+#line 3814 "anasin.tab.c"
     break;
 
   case 28: /* statement: conditional-stmt  */
-#line 408 "anasin.y"
+#line 379 "anasin.y"
     {
       // printf("statement  ->  conditional-stmt \n" );
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3852 "anasin.tab.c"
+#line 3823 "anasin.tab.c"
     break;
 
   case 29: /* statement: iteration-stmt  */
-#line 414 "anasin.y"
+#line 385 "anasin.y"
     {
       // printf("statement  ->  iteration-stmt \n" );
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3861 "anasin.tab.c"
+#line 3832 "anasin.tab.c"
     break;
 
   case 30: /* statement: expression-stmt  */
-#line 420 "anasin.y"
+#line 391 "anasin.y"
     {
       // printf("statement  ->  expression-stmt \n" );
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3870 "anasin.tab.c"
+#line 3841 "anasin.tab.c"
     break;
 
   case 31: /* statement: return-stmt  */
-#line 426 "anasin.y"
+#line 397 "anasin.y"
     {
       // printf("statement  ->  return-stmt \n" );
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3879 "anasin.tab.c"
+#line 3850 "anasin.tab.c"
     break;
 
   case 32: /* statement: var-declaration  */
-#line 432 "anasin.y"
+#line 403 "anasin.y"
     {
       // printf("statement  ->  var-declaration \n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3888 "anasin.tab.c"
+#line 3859 "anasin.tab.c"
     break;
 
   case 33: /* statement: forall-stmt  */
-#line 438 "anasin.y"
+#line 409 "anasin.y"
     {
       // printf("statement  ->  forall-stmt \n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3897 "anasin.tab.c"
+#line 3868 "anasin.tab.c"
     break;
 
   case 34: /* statement: error  */
-#line 444 "anasin.y"
+#line 415 "anasin.y"
     {
       yyerrok;
       (yyval.nt_node) = NULL;
     }
-#line 3906 "anasin.tab.c"
+#line 3877 "anasin.tab.c"
     break;
 
   case 35: /* forall-statement: compound-stmt  */
-#line 451 "anasin.y"
+#line 422 "anasin.y"
     {
       // printf("statement  ->  compound-stmt \n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3915 "anasin.tab.c"
+#line 3886 "anasin.tab.c"
     break;
 
   case 36: /* forall-statement: conditional-stmt  */
-#line 457 "anasin.y"
+#line 428 "anasin.y"
     {
       // printf("statement  ->  conditional-stmt \n" );
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3924 "anasin.tab.c"
+#line 3895 "anasin.tab.c"
     break;
 
   case 37: /* forall-statement: iteration-stmt  */
-#line 463 "anasin.y"
+#line 434 "anasin.y"
     {
       // printf("statement  ->  iteration-stmt \n" );
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3933 "anasin.tab.c"
+#line 3904 "anasin.tab.c"
     break;
 
   case 38: /* forall-statement: expression-stmt  */
-#line 469 "anasin.y"
+#line 440 "anasin.y"
     {
       // printf("statement  ->  expression-stmt \n" );
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3942 "anasin.tab.c"
+#line 3913 "anasin.tab.c"
     break;
 
   case 39: /* forall-statement: forall-stmt  */
-#line 475 "anasin.y"
+#line 446 "anasin.y"
     {
       // printf("statement  ->  forall-stmt \n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 3951 "anasin.tab.c"
+#line 3922 "anasin.tab.c"
     break;
 
   case 40: /* conditional-stmt: IF '(' expression ')' statement  */
-#line 483 "anasin.y"
+#line 454 "anasin.y"
     {
       // printf("conditional-stmt  ->  if ( expression ) statement \n");
       (yyval.nt_node) = create_ast_node(CONDITIONAL_IF_STMT, NULL, NULL, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 3961 "anasin.tab.c"
+#line 3932 "anasin.tab.c"
     break;
 
   case 41: /* conditional-stmt: IF '(' expression ')' statement ELSE statement  */
-#line 490 "anasin.y"
+#line 461 "anasin.y"
     {
       // printf("conditional-stmt  ->  if ( expression ) statement else statement\n");
       (yyval.nt_node) = create_ast_node(CONDITIONAL_IF_ELSE_STMT, NULL, NULL, NULL, (yyvsp[-4].nt_node));
       (yyvsp[-4].nt_node)->next = (yyvsp[-2].nt_node);
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 3972 "anasin.tab.c"
+#line 3943 "anasin.tab.c"
     break;
 
   case 42: /* conditional-stmt: IF setop-in statement  */
-#line 498 "anasin.y"
+#line 469 "anasin.y"
     {
       // printf("conditional-stmt  ->  if ( expression ) statement \n");
       (yyval.nt_node) = create_ast_node(CONDITIONAL_IF_STMT, NULL, NULL, NULL, (yyvsp[-1].nt_node));
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 3982 "anasin.tab.c"
+#line 3953 "anasin.tab.c"
     break;
 
   case 43: /* conditional-stmt: IF setop-in statement ELSE statement  */
-#line 505 "anasin.y"
+#line 476 "anasin.y"
     {
       // printf("conditional-stmt  ->  if ( expression ) statement else statement\n");
       (yyval.nt_node) = create_ast_node(CONDITIONAL_IF_ELSE_STMT, NULL, NULL, NULL, (yyvsp[-3].nt_node));
       (yyvsp[-3].nt_node)->next = (yyvsp[-2].nt_node);
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 3993 "anasin.tab.c"
+#line 3964 "anasin.tab.c"
     break;
 
   case 44: /* iteration-stmt: FOR '(' expression-stmt expression-stmt expression ')' statement  */
-#line 514 "anasin.y"
+#line 485 "anasin.y"
     {
       // printf("iteration-stmt  ->  for ( expression ; expression ; expression ) statement\n");
       (yyval.nt_node) = create_ast_node(ITERATION_STMT, NULL, NULL, NULL, (yyvsp[-4].nt_node));
@@ -4001,125 +3972,125 @@ yyreduce:
       (yyvsp[-3].nt_node)->next = (yyvsp[-2].nt_node);
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4005 "anasin.tab.c"
+#line 3976 "anasin.tab.c"
     break;
 
   case 45: /* forall-stmt: FORALL_OP setop-in forall-statement  */
-#line 525 "anasin.y"
+#line 496 "anasin.y"
     {
       // printf("setop-forall  ->  setop-in forall-statement\n");
       (yyval.nt_node) = create_ast_node(FORALL_STMT, NULL, NULL, NULL, (yyvsp[-1].nt_node));
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4015 "anasin.tab.c"
+#line 3986 "anasin.tab.c"
     break;
 
   case 46: /* expression-stmt: expression ';'  */
-#line 534 "anasin.y"
+#line 505 "anasin.y"
     {
       // printf("expression-stmt  ->  expression ;\n");
       (yyval.nt_node) = (yyvsp[-1].nt_node);
     }
-#line 4024 "anasin.tab.c"
+#line 3995 "anasin.tab.c"
     break;
 
   case 47: /* expression-stmt: ';'  */
-#line 540 "anasin.y"
+#line 511 "anasin.y"
     {
       // printf("expression-stmt  ->  ; \n");
       (yyval.nt_node) = NULL;
     }
-#line 4033 "anasin.tab.c"
+#line 4004 "anasin.tab.c"
     break;
 
   case 48: /* return-stmt: RETURN ';'  */
-#line 547 "anasin.y"
+#line 518 "anasin.y"
     {
       // printf("return-stmt  ->  return ; \n");
       (yyval.nt_node) = create_ast_node(RETURN_STMT, NULL, NULL, NULL, NULL);
     }
-#line 4042 "anasin.tab.c"
+#line 4013 "anasin.tab.c"
     break;
 
   case 49: /* return-stmt: RETURN expression ';'  */
-#line 553 "anasin.y"
+#line 524 "anasin.y"
     {
       // printf("return-stmt  ->  return expression ; \n");
       (yyval.nt_node) = create_ast_node(RETURN_STMT, NULL, NULL, NULL, (yyvsp[-1].nt_node));
     }
-#line 4051 "anasin.tab.c"
+#line 4022 "anasin.tab.c"
     break;
 
   case 50: /* expression: var ASSIGN expression  */
-#line 569 "anasin.y"
+#line 540 "anasin.y"
     {
       // printf("expression  ->  var = expression ;\n");
       (yyval.nt_node) = create_ast_node(EQ_T, NULL, (yyvsp[-1].tt_name), NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4061 "anasin.tab.c"
+#line 4032 "anasin.tab.c"
     break;
 
   case 51: /* expression: simple-expression  */
-#line 576 "anasin.y"
+#line 547 "anasin.y"
     {
       // printf("expression  ->  simple-expression ;\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4070 "anasin.tab.c"
+#line 4041 "anasin.tab.c"
     break;
 
   case 52: /* expression: set-expression  */
-#line 582 "anasin.y"
+#line 553 "anasin.y"
     {
       // printf("expression  ->  set-expression ;\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4079 "anasin.tab.c"
+#line 4050 "anasin.tab.c"
     break;
 
   case 53: /* expression: io-expression  */
-#line 588 "anasin.y"
+#line 559 "anasin.y"
     {
       // printf("expression  ->  io-expression ;\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4088 "anasin.tab.c"
+#line 4059 "anasin.tab.c"
     break;
 
   case 54: /* simple-expression: logop-una relational-exp  */
-#line 595 "anasin.y"
+#line 566 "anasin.y"
     {
       // printf("simple-expression  ->  logop-una relational-exp simple-expression\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-1].nt_node));
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4098 "anasin.tab.c"
+#line 4069 "anasin.tab.c"
     break;
 
   case 55: /* simple-expression: logop-una set-expression  */
-#line 602 "anasin.y"
+#line 573 "anasin.y"
     {
       // printf("simple-expression  ->  logop-una relational-exp simple-expression\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-1].nt_node));
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4108 "anasin.tab.c"
+#line 4079 "anasin.tab.c"
     break;
 
   case 56: /* simple-expression: simple-expression logop-bin relational-exp  */
-#line 609 "anasin.y"
+#line 580 "anasin.y"
     {
       // printf("simple-expression  ->  simple-expression logop-bin relational-exp\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[-1].nt_node);
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4119 "anasin.tab.c"
+#line 4090 "anasin.tab.c"
     break;
 
   case 57: /* simple-expression: simple-expression logop-bin set-expression  */
-#line 617 "anasin.y"
+#line 588 "anasin.y"
     {
       // printf("simple-expression  ->  simple-expression logop-bin relational-exp\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-2].nt_node));
@@ -4127,33 +4098,33 @@ yyreduce:
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
       
     }
-#line 4131 "anasin.tab.c"
+#line 4102 "anasin.tab.c"
     break;
 
   case 58: /* simple-expression: set-expression logop-bin relational-exp  */
-#line 626 "anasin.y"
+#line 597 "anasin.y"
     {
       // printf("simple-expression  ->  simple-expression logop-bin relational-exp\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[-1].nt_node);
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4142 "anasin.tab.c"
+#line 4113 "anasin.tab.c"
     break;
 
   case 59: /* simple-expression: set-expression logop-bin set-expression  */
-#line 634 "anasin.y"
+#line 605 "anasin.y"
     {
       // printf("simple-expression  ->  simple-expression logop-bin relational-exp\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[-1].nt_node);
       (yyvsp[-1].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4153 "anasin.tab.c"
+#line 4124 "anasin.tab.c"
     break;
 
   case 60: /* simple-expression: simple-expression logop-bin logop-una relational-exp  */
-#line 642 "anasin.y"
+#line 613 "anasin.y"
     {
       // printf("simple-expression  ->  simple-expression logop-bin relational-exp\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-3].nt_node));
@@ -4161,11 +4132,11 @@ yyreduce:
       (yyvsp[-2].nt_node)->next = (yyvsp[-1].nt_node);
       (yyvsp[0].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4165 "anasin.tab.c"
+#line 4136 "anasin.tab.c"
     break;
 
   case 61: /* simple-expression: simple-expression logop-bin logop-una set-expression  */
-#line 651 "anasin.y"
+#line 622 "anasin.y"
     {
       // printf("simple-expression  ->  simple-expression logop-bin relational-exp\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-3].nt_node));
@@ -4173,11 +4144,11 @@ yyreduce:
       (yyvsp[-2].nt_node)->next = (yyvsp[-1].nt_node);
       (yyvsp[0].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4177 "anasin.tab.c"
+#line 4148 "anasin.tab.c"
     break;
 
   case 62: /* simple-expression: set-expression logop-bin logop-una relational-exp  */
-#line 660 "anasin.y"
+#line 631 "anasin.y"
     {
       // printf("simple-expression  ->  simple-expression logop-bin relational-exp\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-3].nt_node));
@@ -4185,11 +4156,11 @@ yyreduce:
       (yyvsp[-2].nt_node)->next = (yyvsp[-1].nt_node);
       (yyvsp[0].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4189 "anasin.tab.c"
+#line 4160 "anasin.tab.c"
     break;
 
   case 63: /* simple-expression: set-expression logop-bin logop-una set-expression  */
-#line 669 "anasin.y"
+#line 640 "anasin.y"
     {
       // printf("simple-expression  ->  simple-expression logop-bin relational-exp\n");
       (yyval.nt_node) = create_ast_node(SIMPLE_EXPRESSION, NULL, NULL, NULL, (yyvsp[-3].nt_node));
@@ -4197,497 +4168,497 @@ yyreduce:
       (yyvsp[-2].nt_node)->next = (yyvsp[-1].nt_node);
       (yyvsp[0].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4201 "anasin.tab.c"
+#line 4172 "anasin.tab.c"
     break;
 
   case 64: /* simple-expression: relational-exp  */
-#line 678 "anasin.y"
+#line 649 "anasin.y"
     {
       // printf("simple-expression  ->  relational-exp\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4210 "anasin.tab.c"
+#line 4181 "anasin.tab.c"
     break;
 
   case 65: /* relational-exp: relational-exp relop arithm-add-exp  */
-#line 685 "anasin.y"
+#line 656 "anasin.y"
     {
       // printf("relational-exp  ->  arithm-add-exp relop arithm-add-exp\n");
       (yyval.nt_node) = create_ast_node(RELATIONAL_EXP, NULL, (yyvsp[-1].nt_node)->value, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
       // $2->next = $3;
     }
-#line 4221 "anasin.tab.c"
+#line 4192 "anasin.tab.c"
     break;
 
   case 66: /* relational-exp: arithm-add-exp  */
-#line 693 "anasin.y"
+#line 664 "anasin.y"
     {
       // printf("relational-exp  ->  arithm-add-exp\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4230 "anasin.tab.c"
+#line 4201 "anasin.tab.c"
     break;
 
   case 67: /* arithm-add-exp: arithm-add-exp ariop-add arithm-mul-exp  */
-#line 700 "anasin.y"
+#line 671 "anasin.y"
     {
       // printf("arithm-add-exp  ->  arithm-add-exp ariop-add arithm-mul-exp\n");
       (yyval.nt_node) = create_ast_node(ARITHM_ADD_EXP, NULL, (yyvsp[-1].nt_node)->value, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
       // $2->next = $3;
     }
-#line 4241 "anasin.tab.c"
+#line 4212 "anasin.tab.c"
     break;
 
   case 68: /* arithm-add-exp: arithm-mul-exp  */
-#line 708 "anasin.y"
+#line 679 "anasin.y"
     {
       // printf("arithm-add-exp  ->  arithm-mul-exp\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4250 "anasin.tab.c"
+#line 4221 "anasin.tab.c"
     break;
 
   case 69: /* arithm-mul-exp: arithm-mul-exp ariop-mul unary-minus-exp  */
-#line 715 "anasin.y"
+#line 686 "anasin.y"
     {
       // printf("arithm-mul-exp  ->  arithm-mul-exp ariop-mul unary-minus-exp\n");
       (yyval.nt_node) = create_ast_node(ARITHM_MUL_EXP, NULL, (yyvsp[-1].nt_node)->value, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
       // $2->next = $3;
     }
-#line 4261 "anasin.tab.c"
+#line 4232 "anasin.tab.c"
     break;
 
   case 70: /* arithm-mul-exp: unary-minus-exp  */
-#line 723 "anasin.y"
+#line 694 "anasin.y"
     {
       // printf("arithm-mul-exp  ->  unary-minus-exp\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4270 "anasin.tab.c"
+#line 4241 "anasin.tab.c"
     break;
 
   case 71: /* unary-minus-exp: MINUS factor  */
-#line 730 "anasin.y"
+#line 701 "anasin.y"
     {
       // printf("unary-minus-exp  ->  '-' factor\n");
       // $$ = $2; //CORRIGIR NUMERO NEGATIVO
       (yyval.nt_node) = create_ast_node(UNARY_MINUS_EXP, NULL, (yyvsp[-1].tt_name), NULL, (yyvsp[0].nt_node));
     }
-#line 4280 "anasin.tab.c"
+#line 4251 "anasin.tab.c"
     break;
 
   case 72: /* unary-minus-exp: factor  */
-#line 737 "anasin.y"
+#line 708 "anasin.y"
     {
       // printf("unary-minus-exp  ->  factor\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4289 "anasin.tab.c"
+#line 4260 "anasin.tab.c"
     break;
 
   case 73: /* factor: '(' expression ')'  */
-#line 744 "anasin.y"
+#line 715 "anasin.y"
     {
       // printf("factor  ->  ( expression )\n");
       (yyval.nt_node) = (yyvsp[-1].nt_node);
     }
-#line 4298 "anasin.tab.c"
+#line 4269 "anasin.tab.c"
     break;
 
   case 74: /* factor: func-call  */
-#line 750 "anasin.y"
+#line 721 "anasin.y"
     {
       // printf("factor  ->  func-call\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4307 "anasin.tab.c"
+#line 4278 "anasin.tab.c"
     break;
 
   case 75: /* factor: var  */
-#line 761 "anasin.y"
+#line 732 "anasin.y"
     {
       // printf("factor  ->  var\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4316 "anasin.tab.c"
+#line 4287 "anasin.tab.c"
     break;
 
   case 76: /* factor: INT  */
-#line 767 "anasin.y"
+#line 738 "anasin.y"
     {
       // printf("factor  ->  %s\n", $1);
       (yyval.nt_node) = create_ast_node(FACTOR, NULL, (yyvsp[0].tt_name), NULL, NULL);
     }
-#line 4325 "anasin.tab.c"
+#line 4296 "anasin.tab.c"
     break;
 
   case 77: /* factor: FLOAT  */
-#line 773 "anasin.y"
+#line 744 "anasin.y"
     {
       // printf("factor  ->  %s\n", $1);
       (yyval.nt_node) = create_ast_node(FACTOR, NULL, (yyvsp[0].tt_name), NULL, NULL);
     }
-#line 4334 "anasin.tab.c"
+#line 4305 "anasin.tab.c"
     break;
 
   case 78: /* factor: EMPTY  */
-#line 779 "anasin.y"
+#line 750 "anasin.y"
     {
       // printf("factor  ->  %s\n", $1);
       (yyval.nt_node) = create_ast_node(FACTOR, NULL, (yyvsp[0].tt_name), NULL, NULL);
     }
-#line 4343 "anasin.tab.c"
+#line 4314 "anasin.tab.c"
     break;
 
   case 79: /* logop-una: NOT  */
-#line 786 "anasin.y"
+#line 757 "anasin.y"
     {
       // printf("logop-una  ->  !\n");
       (yyval.nt_node) = create_ast_node(LOGOP_UNA, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4353 "anasin.tab.c"
+#line 4324 "anasin.tab.c"
     break;
 
   case 80: /* logop-bin: AND  */
-#line 794 "anasin.y"
+#line 765 "anasin.y"
     {
       // printf("logop-bin  ->  &&\n");
       (yyval.nt_node) = create_ast_node(LOGOP_BIN, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4363 "anasin.tab.c"
+#line 4334 "anasin.tab.c"
     break;
 
   case 81: /* logop-bin: OR  */
-#line 801 "anasin.y"
+#line 772 "anasin.y"
     {
       // printf("logop-bin  ->  ||\n");
       (yyval.nt_node) = create_ast_node(LOGOP_BIN, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4373 "anasin.tab.c"
+#line 4344 "anasin.tab.c"
     break;
 
   case 82: /* relop: LT  */
-#line 809 "anasin.y"
+#line 780 "anasin.y"
     {
       // printf("relop  ->  <\n");
       (yyval.nt_node) = create_ast_node(RELOP, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4383 "anasin.tab.c"
+#line 4354 "anasin.tab.c"
     break;
 
   case 83: /* relop: LTE  */
-#line 816 "anasin.y"
+#line 787 "anasin.y"
     {
       // printf("relop  ->  <=\n");
       (yyval.nt_node) = create_ast_node(RELOP, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4393 "anasin.tab.c"
+#line 4364 "anasin.tab.c"
     break;
 
   case 84: /* relop: GT  */
-#line 823 "anasin.y"
+#line 794 "anasin.y"
     {
       // printf("relop  ->  >\n");
       (yyval.nt_node) = create_ast_node(RELOP, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4403 "anasin.tab.c"
+#line 4374 "anasin.tab.c"
     break;
 
   case 85: /* relop: GTE  */
-#line 830 "anasin.y"
+#line 801 "anasin.y"
     {
       // printf("relop  ->  >=\n");
       (yyval.nt_node) = create_ast_node(RELOP, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4413 "anasin.tab.c"
+#line 4384 "anasin.tab.c"
     break;
 
   case 86: /* relop: EQ  */
-#line 837 "anasin.y"
+#line 808 "anasin.y"
     {
       // printf("relop  ->  ==\n");
       (yyval.nt_node) = create_ast_node(RELOP, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4423 "anasin.tab.c"
+#line 4394 "anasin.tab.c"
     break;
 
   case 87: /* relop: NEQ  */
-#line 844 "anasin.y"
+#line 815 "anasin.y"
     {
       // printf("relop  ->  !=\n");
       (yyval.nt_node) = create_ast_node(RELOP, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4433 "anasin.tab.c"
+#line 4404 "anasin.tab.c"
     break;
 
   case 88: /* ariop-add: PLUS  */
-#line 852 "anasin.y"
+#line 823 "anasin.y"
     {
       // printf("ariop-add  ->  +\n");
       (yyval.nt_node) = create_ast_node(ARIOP_ADD, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4443 "anasin.tab.c"
+#line 4414 "anasin.tab.c"
     break;
 
   case 89: /* ariop-add: MINUS  */
-#line 859 "anasin.y"
+#line 830 "anasin.y"
     {
       // printf("ariop-add  ->  -\n");
       (yyval.nt_node) = create_ast_node(ARIOP_ADD, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4453 "anasin.tab.c"
+#line 4424 "anasin.tab.c"
     break;
 
   case 90: /* ariop-mul: MULT  */
-#line 867 "anasin.y"
+#line 838 "anasin.y"
     {
       // printf("ariop-mul  ->  *\n");
       (yyval.nt_node) = create_ast_node(ARIOP_MUL, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4463 "anasin.tab.c"
+#line 4434 "anasin.tab.c"
     break;
 
   case 91: /* ariop-mul: DIV  */
-#line 874 "anasin.y"
+#line 845 "anasin.y"
     {
       // printf("ariop-mul  ->  /\n");
       (yyval.nt_node) = create_ast_node(ARIOP_MUL, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4473 "anasin.tab.c"
+#line 4444 "anasin.tab.c"
     break;
 
   case 92: /* set-expression: setop-in  */
-#line 882 "anasin.y"
+#line 853 "anasin.y"
     {
       // printf("set-expressions  ->  setop-in\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4482 "anasin.tab.c"
+#line 4453 "anasin.tab.c"
     break;
 
   case 93: /* set-expression: setop-is-set  */
-#line 888 "anasin.y"
+#line 859 "anasin.y"
     {
       // printf("set-expressions  ->  setop-is-set\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4491 "anasin.tab.c"
+#line 4462 "anasin.tab.c"
     break;
 
   case 94: /* set-expression: setop-add  */
-#line 894 "anasin.y"
+#line 865 "anasin.y"
     {
       // printf("set-expressions  ->  setop-add\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4500 "anasin.tab.c"
+#line 4471 "anasin.tab.c"
     break;
 
   case 95: /* set-expression: setop-remove  */
-#line 900 "anasin.y"
+#line 871 "anasin.y"
     {
       // printf("set-expressions  ->  setop-remove\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4509 "anasin.tab.c"
+#line 4480 "anasin.tab.c"
     break;
 
   case 96: /* set-expression: setop-exists  */
-#line 906 "anasin.y"
+#line 877 "anasin.y"
     {
       // printf("set-expressions  ->  setop-exists\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4518 "anasin.tab.c"
+#line 4489 "anasin.tab.c"
     break;
 
   case 97: /* setop-in: '(' expression IN_OP expression ')'  */
-#line 913 "anasin.y"
+#line 884 "anasin.y"
     {
       // printf("setop-in  ->  ( expression IN_OP expression ) \n");
       (yyval.nt_node) = create_ast_node(SETOP_IN, NULL, (yyvsp[-2].tt_name), NULL, (yyvsp[-3].nt_node));
       (yyvsp[-3].nt_node)->next = (yyvsp[-1].nt_node);
     }
-#line 4528 "anasin.tab.c"
+#line 4499 "anasin.tab.c"
     break;
 
   case 98: /* setop-is-set: IS_SET_OP '(' var ')'  */
-#line 930 "anasin.y"
+#line 901 "anasin.y"
     {
       // printf("setop-is-set  ->  is_set ( var )\n");
       (yyval.nt_node) = create_ast_node(SETOP_IS_SET, NULL, (yyvsp[-3].tt_name), NULL, (yyvsp[-1].nt_node));
     }
-#line 4537 "anasin.tab.c"
+#line 4508 "anasin.tab.c"
     break;
 
   case 99: /* setop-add: ADD_OP setop-in  */
-#line 937 "anasin.y"
+#line 908 "anasin.y"
     {
       // printf("setop-add  ->  add setop-in\n");
       (yyval.nt_node) = create_ast_node(SETOP_ADD, NULL, (yyvsp[-1].tt_name), NULL, (yyvsp[0].nt_node));
     }
-#line 4546 "anasin.tab.c"
+#line 4517 "anasin.tab.c"
     break;
 
   case 100: /* setop-remove: REMOVE_OP setop-in  */
-#line 944 "anasin.y"
+#line 915 "anasin.y"
     {
       // printf("setop-remove  ->  remove setop-in\n");
       (yyval.nt_node) = create_ast_node(SETOP_REMOVE, NULL, (yyvsp[-1].tt_name), NULL, (yyvsp[0].nt_node));
     }
-#line 4555 "anasin.tab.c"
+#line 4526 "anasin.tab.c"
     break;
 
   case 101: /* setop-exists: EXISTS_OP '(' var IN_OP var ')'  */
-#line 968 "anasin.y"
+#line 939 "anasin.y"
     {
       // printf("setop-exists  ->  exists ( var in var )\n");
       (yyval.nt_node) = create_ast_node(SETOP_EXISTS, NULL, (yyvsp[-5].tt_name), NULL, (yyvsp[-3].nt_node));
       (yyvsp[-3].nt_node)->next = (yyvsp[-1].nt_node);
     }
-#line 4565 "anasin.tab.c"
+#line 4536 "anasin.tab.c"
     break;
 
   case 102: /* io-expression: ioop-read  */
-#line 976 "anasin.y"
+#line 947 "anasin.y"
     {
       // printf("io-expression  ->  ioop-read\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4574 "anasin.tab.c"
+#line 4545 "anasin.tab.c"
     break;
 
   case 103: /* io-expression: ioop-write  */
-#line 982 "anasin.y"
+#line 953 "anasin.y"
     {
       // printf("io-expression  ->  ioop-read\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4583 "anasin.tab.c"
+#line 4554 "anasin.tab.c"
     break;
 
   case 104: /* ioop-read: READ '(' var ')'  */
-#line 998 "anasin.y"
+#line 969 "anasin.y"
     {
       // printf("ioop-read  ->  read ( var ) \n");
       (yyval.nt_node) = create_ast_node(READ_T, NULL, (yyvsp[-3].tt_name), NULL, (yyvsp[-1].nt_node));
     }
-#line 4592 "anasin.tab.c"
+#line 4563 "anasin.tab.c"
     break;
 
   case 105: /* ioop-write: WRITE '(' word ')'  */
-#line 1005 "anasin.y"
+#line 976 "anasin.y"
     {
       // printf("ioop-write  ->  write ( word ) \n");
       (yyval.nt_node) = create_ast_node(WRITE_T, NULL, (yyvsp[-3].tt_name), NULL, (yyvsp[-1].nt_node));
     }
-#line 4601 "anasin.tab.c"
+#line 4572 "anasin.tab.c"
     break;
 
   case 106: /* ioop-write: WRITELN '(' word ')'  */
-#line 1011 "anasin.y"
+#line 982 "anasin.y"
     {
       // printf("ioop-write  ->  writeln ( word ) \n");
       (yyval.nt_node) = create_ast_node(WRITELN_T, NULL, (yyvsp[-3].tt_name), NULL, (yyvsp[-1].nt_node));
     }
-#line 4610 "anasin.tab.c"
+#line 4581 "anasin.tab.c"
     break;
 
   case 107: /* word: CHAR  */
-#line 1018 "anasin.y"
+#line 989 "anasin.y"
     {
       // printf("word  ->  %s\n", $1);
       (yyval.nt_node) = create_ast_node(CHAR_T, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4620 "anasin.tab.c"
+#line 4591 "anasin.tab.c"
     break;
 
   case 108: /* word: STRING  */
-#line 1025 "anasin.y"
+#line 996 "anasin.y"
     {
       // printf("word  ->  %s\n", $1);
       (yyval.nt_node) = create_ast_node(STRING_T, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4630 "anasin.tab.c"
+#line 4601 "anasin.tab.c"
     break;
 
   case 109: /* func-call: ID '(' arguments ')'  */
-#line 1033 "anasin.y"
+#line 1004 "anasin.y"
     {
       // printf("func-call  ->  %s ( arguments )\n", $1);
       (yyval.nt_node) = create_ast_node(FUNC_CALL, NULL, (yyvsp[-3].tt_name), NULL, (yyvsp[-1].nt_node));
     }
-#line 4639 "anasin.tab.c"
+#line 4610 "anasin.tab.c"
     break;
 
   case 110: /* arguments: args-list  */
-#line 1040 "anasin.y"
+#line 1011 "anasin.y"
     {
       // printf("arguments  ->  args-list\n");
       (yyval.nt_node) = (yyvsp[0].nt_node);
     }
-#line 4648 "anasin.tab.c"
+#line 4619 "anasin.tab.c"
     break;
 
   case 111: /* arguments: %empty  */
-#line 1046 "anasin.y"
+#line 1017 "anasin.y"
     {
       // printf("arguments  ->  empty-set\n");
       (yyval.nt_node) = NULL;
     }
-#line 4657 "anasin.tab.c"
+#line 4628 "anasin.tab.c"
     break;
 
   case 112: /* args-list: args-list ',' expression  */
-#line 1053 "anasin.y"
+#line 1024 "anasin.y"
     {
       // printf("args-list  ->  args-list , expression\n");
       (yyval.nt_node) = create_ast_node(ARGS_LIST, NULL, NULL, NULL, (yyvsp[-2].nt_node));
       (yyvsp[-2].nt_node)->next = (yyvsp[0].nt_node);
     }
-#line 4667 "anasin.tab.c"
+#line 4638 "anasin.tab.c"
     break;
 
   case 113: /* args-list: expression  */
-#line 1060 "anasin.y"
+#line 1031 "anasin.y"
     {
       // printf("args-list  ->  expression\n");
       (yyval.nt_node) = create_ast_node(ARGS_LIST, NULL, NULL, NULL, (yyvsp[0].nt_node));
       // $$ = $1;
     }
-#line 4677 "anasin.tab.c"
+#line 4648 "anasin.tab.c"
     break;
 
   case 114: /* var: ID  */
-#line 1068 "anasin.y"
+#line 1039 "anasin.y"
     {
       // printf("var  ->  %s\n", $1);
       (yyval.nt_node) = create_ast_node(VAR, NULL, (yyvsp[0].tt_name), NULL, NULL);
       // $$ = $1;
     }
-#line 4687 "anasin.tab.c"
+#line 4658 "anasin.tab.c"
     break;
 
 
-#line 4691 "anasin.tab.c"
+#line 4662 "anasin.tab.c"
 
       default: break;
     }
@@ -4917,7 +4888,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 1075 "anasin.y"
+#line 1046 "anasin.y"
 
 
 
@@ -4941,9 +4912,13 @@ int main(int argc, char *argv[]){
 
   run_semantic_validation();
 
-  printf("\n\n\n________________| ABSTRACT SYNTAX TREE |________________\n\n");
-  print_tree(abstract_tree, 0);
+  if(semantic_errors != 1){
+    printf("\n\n\n________________| ABSTRACT SYNTAX TREE |________________\n\n");
+    print_tree(abstract_tree, 0);
+  }
   print_symbol_table();
+
+  printf("\n\n\n________________| SCOPE TREE |________________\n\n");
   print_scope(global_scope, 0);
 
   free_ast(abstract_tree);
@@ -4967,7 +4942,10 @@ void initialize_semantic_validations() {
 }
 
 void run_semantic_validation() {
-  if(semantics->main_issue == 1) printf("-> SEMANTIC_VALIDATION_ERROR: no function 'main' declared.");
+  if(semantics->main_issue == 1){
+    printf("-> SEMANTIC_VALIDATION_ERROR|SE001|: no function 'main' declared.");
+    semantic_errors = 1;
+  }
 }
 
 void perform_main_validation(char* func_name) {

@@ -1,4 +1,5 @@
-#include "scope.h"
+// #include "scope.h"
+#include "symbol_table.h"
 
 
 scope* get_scope_top(scope* current_scope);
@@ -62,3 +63,5 @@ void print_scope(scope* scp, int depth) {
     print_scope(scp->next, depth);
   }
 }
+
+// int check_token_accesibility(scope* cur_scope, symbol_table_entry* token);

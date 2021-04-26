@@ -109,10 +109,10 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-#line 54 "anasin.y"
+#line 55 "anasin.y"
 union value
 {
-#line 54 "anasin.y"
+#line 55 "anasin.y"
 
   // char tt_name[51]; // tt_name: Terminal Token name      inicialização com tamanho estático para poder usar strcpy no léxico e não precisar lidar com free's eternos por causa do strdup
   char* tt_name; // tt_name: Terminal Token name
@@ -121,7 +121,7 @@ union value
 #line 122 "anasin.tab.h"
 
 };
-#line 54 "anasin.y"
+#line 55 "anasin.y"
 typedef union value YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
