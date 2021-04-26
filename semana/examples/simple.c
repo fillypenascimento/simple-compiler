@@ -12,5 +12,15 @@ int main(set argc, int lopa) {
     result = num - -1.75;
   }
 
+  {
+    float berada;
+  }
+
+  return 0;
+}
+
+int seta() {
+  float beterraba;
+
   return 0;
 }

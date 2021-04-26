@@ -11,6 +11,7 @@ cmodules:
 	anasin.tab.c						\
 	symbol_table.c					\
 	ast.c 									\
+	scope.c									\
 	-lm -o parser
 
 valgrind:

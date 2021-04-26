@@ -1,4 +1,7 @@
-int main () {
+elem porti;
+int alamo;
+
+int main() {
     int a;
     int b;
     float de;
@@ -7,7 +10,7 @@ int main () {
     de = 1.5;
 
     {
-        int a;
+        // int a;
         a = b + (-2);
     }
     {
@@ -18,4 +21,18 @@ int main () {
     }
     int beta;
     int pord;
+
+    return 0;
+}
+
+int anita(set albert) {
+  int a;
+  int zeta;
+  
+  {
+    int b;
+    float birita;
+  }
+
+  return 0;
 }

@@ -10,6 +10,7 @@
   #include "uthash.h"
   #include "symbol_table.h"
   #include "ast.h"
+  #include "scope.h"
 
   extern int yylex();
   extern int yylex_destroy();
@@ -19,11 +20,30 @@
   extern int error_count;
   extern void yyerror(const char *tt_name);
 
+  typedef struct semantic_validations {
+    int main_issue;
+    int scope_issue;
+    int previous_ref_issue;
+    int function_args_issue;
+    int implicit_cast_issue;
+    int return_type_issue;
+  } semantic_validations;
+
+  void perform_main_validation(char* func_name);
+  void run_semantic_validation();
+  void initialize_semantic_validations();
 
   /* INITIALIZATIONS */
   symbol_table_entry* symbol_table = NULL; // Tabela de símbolos definida como uma cadeia de entradas symbol_table_entry
   tree_node* abstract_tree = NULL; // Árvore abstrata definida como uma cadeia de entradas tree_node
-  int current_scope = 0; // Inicializa escopo global - https://steemit.com/programming/@drifter1/writing-a-simple-compiler-on-my-own-using-symbol-tables-in-the-lexer - 13/04
+  int global_scope_counter = 0; // Inicializa escopo global - https://steemit.com/programming/@drifter1/writing-a-simple-compiler-on-my-own-using-symbol-tables-in-the-lexer - 13/04
+  int current_scope_seq = 0;
+  int aux_scope = 0;
+  scope* global_scope = NULL;
+  scope* current_scope = NULL;
+  int whitin_parameters = 0;
+  int whitin_function = 0;
+  semantic_validations* semantics = NULL;
 
 %}
 
@@ -203,16 +223,44 @@ variable:
       // printf("variable  ->  type-specifier %s\n", $2);
       // NÃO PRECISA CRIAR NÓ NO TYPE-SPECIFIER, SÓ CHAMAR A TT_NAME DA UNION 
       $$ = create_ast_node(VARIABLE, (char*) $1, $2, NULL, NULL);
-      insert_into_symbol_table($2, (char*) $1, "variable");
+      if(whitin_parameters) insert_into_symbol_table($2, (char*) $1, "parameter");
+      else insert_into_symbol_table($2, (char*) $1, "variable");
     }
 ;
 func-declaration:
-  type-specifier ID '(' parameter-list ')' compound-stmt
+  type-specifier ID '('
+    {
+      whitin_parameters = 1;
+      whitin_function = 1;
+      printf("1: %d\n", global_scope_counter);
+      global_scope_counter++;
+      aux_scope = current_scope_seq;
+      current_scope_seq = global_scope_counter;
+      printf("2: %d\n", global_scope_counter);
+      // current_scope_seq = global_scope_counter;
+      // current_scope = create_scope(current_scope, global_scope_counter);
+    }
+  parameter-list ')'
+    {
+      whitin_parameters = 0;
+      global_scope_counter--;
+      current_scope_seq = aux_scope;
+      // current_scope_seq--;
+      // current_scope = current_scope->father;
+    }
+  compound-stmt
     {
       // printf("func-declaration  ->  type-specifier %s ( parameters ) compount-stmt\n", $2);
-      $$ = create_ast_node(FUNC_DECLARATION, $1, $2, NULL, $4);
-      $4->next = $6;
+      $$ = create_ast_node(FUNC_DECLARATION, $1, $2, NULL, $5);
+      $5->next = $8;
+      // current_scope_seq--;
+      aux_scope = current_scope_seq;
+      current_scope_seq = current_scope->scope_seq;
       insert_into_symbol_table($2, $1, "function");
+      current_scope_seq = aux_scope;
+      perform_main_validation($2);
+      // printf("wfunction: %d\n", whitin_function);
+      whitin_function = 0;
     }
 ;
 type-specifier:
@@ -288,14 +336,37 @@ parameter:
 compound-stmt:
   '{' 
     {
-      current_scope+=1;
+      // if(!whitin_function){
+        printf("3: %d\n", global_scope_counter);
+        
+        // if(whitin_function) {
+        //   global_scope_counter++;
+        //   aux_scope = current_scope_seq;
+        //   current_scope_seq = global_scope_counter;
+        // }
+        
+        global_scope_counter++;
+        aux_scope = current_scope_seq;
+        current_scope_seq = global_scope_counter;
+        printf("4: %d\n", global_scope_counter);
+      // }
+      // current_scope_seq++;
+      current_scope = create_scope(current_scope, global_scope_counter);
     }
   local-declarations '}'
     {
       // printf("compound-stmt  ->  { local-declarations }\n");
       $$ = create_ast_node(COMPOUND_STMT, NULL, NULL, NULL, $3);
       // $$ = $3;
-      current_scope-=1;
+      printf("5: %d\n", global_scope_counter);
+      // global_scope_counter--;
+      // current_scope_seq--;
+      current_scope_seq = aux_scope;
+      printf("6: %d\n", global_scope_counter);
+      // current_scope_seq--;
+      current_scope = current_scope->father;
+      whitin_function = 0;
+      printf("wfunction: %d\n", whitin_function);
     }
 ;
 local-declarations:
@@ -1012,6 +1083,9 @@ void yyerror(const char *tt_name) {
 int main(int argc, char *argv[]){
   yyin = fopen(argv[1], "r");
 
+  global_scope = initialize_scope();
+  current_scope = global_scope;
+  initialize_semantic_validations();
   yyparse();
   fclose(yyin);
 
@@ -1019,14 +1093,45 @@ int main(int argc, char *argv[]){
   //    printf("\nThe lexical analisys finished with %d errors found.\n", error_count);
   //  }
 
+  run_semantic_validation();
+
   printf("\n\n\n________________| ABSTRACT SYNTAX TREE |________________\n\n");
   print_tree(abstract_tree, 0);
   print_symbol_table();
+  print_scope(global_scope, 0);
 
   free_ast(abstract_tree);
   free_symbol_table();
+  free_scope(global_scope);
   
   yylex_destroy();
 
   return 0;
+}
+
+void initialize_semantic_validations() {
+  semantics = (semantic_validations*) malloc(sizeof(semantic_validations));
+
+  semantics->main_issue = 1;
+  semantics->scope_issue = 0;
+  semantics->previous_ref_issue = 0;
+  semantics->function_args_issue = 0;
+  semantics->implicit_cast_issue = 0;
+  semantics->return_type_issue = 0;
+}
+
+void run_semantic_validation() {
+  if(semantics->main_issue == 1) printf("-> SEMANTIC_VALIDATION_ERROR: no function 'main' declared.");
+}
+
+void perform_main_validation(char* func_name) {
+  // if(semantics->main_issue){
+  //   printf("-> SEMANTIC_VALIDATION_ERROR: double 'main' function declaration.");
+  // }
+  // valida se existe main declarada
+  // printf("%s\n", func_name);
+  // printf("%d %d\n", semantics->main_issue, strcmp(func_name, "main"));
+  if(semantics->main_issue && (strcmp(func_name, "main") == 0)) {
+    semantics->main_issue = 0;
+  }
 }

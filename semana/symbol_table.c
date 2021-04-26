@@ -1,7 +1,7 @@
 #include "symbol_table.h"
 
 
-extern int current_scope;
+extern int current_scope_seq;
 extern symbol_table_entry* symbol_table;
 
 /* HANDLE SYMBOL TABLE */
@@ -14,7 +14,6 @@ symbol_table_entry* create_symbol_table_entry(char* hash_key, char* symbol_name,
   new_entry->symbol_type = symbol_type;
   new_entry->symbol_scope = symbol_scope;
   new_entry->entry_type = entry_type;
-
   return new_entry;
 }
 
@@ -25,30 +24,32 @@ void insert_into_symbol_table(char* symbol_name, char* symbol_type, char* entry_
   new_entry = lookup_symbol_table(hash_key, new_entry);
 
   if(new_entry == NULL) {
-    new_entry = create_symbol_table_entry(hash_key, symbol_name, symbol_type, current_scope, entry_type);
+    new_entry = create_symbol_table_entry(hash_key, symbol_name, symbol_type, current_scope_seq, entry_type);
     HASH_ADD_STR(symbol_table, hash_key, new_entry);
   } else {
-    printf("Symbol of type %s \"%s %s\" entry already exists for scope %d in the Symbol Table.\n", entry_type, symbol_type, symbol_name, current_scope);
+    printf("Symbol of type %s \"%s %s\" entry already exists for scope %d in the Symbol Table.\n", entry_type, symbol_type, symbol_name, current_scope_seq);
   }
 }
 
 char* build_hash_key(char* symbol_name, char* symbol_type, char* entry_type) {
   // https://stackoverflow.com/questions/8257714/how-to-convert-an-int-to-string-in-c
-  char* scope = malloc(2*sizeof(char)); // CORRIGIR ALOCAÇÃO QUANDO ESTIVER LIDANDO COM ESCOPO
-  sprintf(scope, "%d", current_scope);
+  char* scope = malloc(3*sizeof(char)); // CORRIGIR ALOCAÇÃO QUANDO ESTIVER LIDANDO COM ESCOPO
+  sprintf(scope, "%d", current_scope_seq);
   // https://stackoverflow.com/questions/8465006/how-do-i-concatenate-two-strings-in-c
-  int key_size = strlen(scope) + strlen(entry_type) + strlen(symbol_type) + strlen(symbol_name) + 6;
+  // int key_size = strlen(scope) + strlen(entry_type) + strlen(symbol_type) + strlen(symbol_name) + 6;
+  int key_size = strlen(scope) + strlen(symbol_name) + 3;
 
   // Cada chave hash a ser utilizada no uthash tem o formato "(scope)entry_type::symbol_type.symbol_name"
   char* new_key = (char*) malloc(key_size);
   strcpy(new_key, "(");
   strcat(new_key, scope);
   strcat(new_key, ")");
-  strcat(new_key, entry_type);
-  strcat(new_key, "::");
-  strcat(new_key, symbol_type);
-  strcat(new_key, ".");
   strcat(new_key, symbol_name);
+  // strcat(new_key, entry_type);
+  // strcat(new_key, "::");
+  // strcat(new_key, symbol_type);
+  // strcat(new_key, ".");
+  // strcat(new_key, symbol_name);
 
   free(scope);
 
